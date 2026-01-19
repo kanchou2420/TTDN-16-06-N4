@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ==================== CÔNG NỢ PHẢI THU ==================== -->
+    
+    <!-- Công nợ phải thu Form View -->
+    <record id="view_cong_no_thu_form" model="ir.ui.view">
+        <field name="name">cong.no.phai.thu.form</field>
+        <field name="model">cong_no_phai_thu</field>
+        <field name="arch" type="xml">
+            <form string="Công nợ phải thu">
+                <header>
+                    <button name="action_confirm" string="Xác nhận" type="object" 
+                            class="btn-primary" states="draft"/>
+                    <button name="action_cancel" string="Hủy" type="object" 
+                            class="btn-secondary" states="draft,open"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,open,partial,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_phieu_thu" type="object" class="oe_stat_button" icon="fa-money">
+                            <field name="phieu_thu_count" string="Phiếu thu" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <div class="alert alert-danger" role="alert" attrs="{'invisible': [('is_overdue', '=', False)]}">
+                        <strong>⚠️ QUÁ HẠN:</strong> Đã quá hạn <field name="overdue_days" nolabel="1"/> ngày
+                    </div>
+                    <group>
+                        <group string="Thông tin chung">
+                            <field name="partner_id"/>
+                            <field name="origin_type"/>
+                            <field name="origin"/>
+                            <field name="phonban_id"/>
+                            <field name="nhan_vien_id"/>
+                        </group>
+                        <group string="Ngày">
+                            <field name="date"/>
+                            <field name="due_date"/>
+                            <field name="is_overdue" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Số tiền">
+                            <field name="amount"/>
+                            <field name="paid_amount"/>
+                            <field name="residual"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lịch sử thanh toán">
+                            <field name="payment_line_ids" readonly="1">
+                                <tree string="Lịch sử thanh toán">
+                                    <field name="date"/>
+                                    <field name="amount"/>
+                                    <field name="phieu_thu_id"/>
+                                    <field name="note"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Ghi chú">
+                            <field name="note" placeholder="Nhập ghi chú..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Công nợ phải thu Tree View -->
+    <record id="view_cong_no_thu_tree" model="ir.ui.view">
+        <field name="name">cong.no.phai.thu.tree</field>
+        <field name="model">cong_no_phai_thu</field>
+        <field name="arch" type="xml">
+            <tree string="Công nợ phải thu" decoration-danger="is_overdue==True" 
+                  decoration-success="state=='paid'" decoration-muted="state=='cancel'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="due_date"/>
+                <field name="amount" sum="Tổng nợ"/>
+                <field name="paid_amount" sum="Đã thu"/>
+                <field name="residual" sum="Còn nợ"/>
+                <field name="overdue_days"/>
+                <field name="state"/>
+                <field name="is_overdue" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Công nợ phải thu Search View -->
+    <record id="view_cong_no_thu_search" model="ir.ui.view">
+        <field name="name">cong.no.phai.thu.search</field>
+        <field name="model">cong_no_phai_thu</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm Công nợ phải thu">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="origin"/>
+                <filter string="Đang nợ" name="open" domain="[('state', 'in', ['open', 'partial'])]"/>
+                <filter string="Đã thu đủ" name="paid" domain="[('state', '=', 'paid')]"/>
+                <separator/>
+                <filter string="Quá hạn" name="overdue" domain="[('is_overdue', '=', True)]"/>
+                <separator/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Khách hàng" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Tháng đáo hạn" name="group_due" context="{'group_by': 'due_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Công nợ phải thu Action -->
+    <record id="action_cong_no_thu" model="ir.actions.act_window">
+        <field name="name">Công nợ phải thu</field>
+        <field name="res_model">cong_no_phai_thu</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_cong_no_thu_search"/>
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo công nợ phải thu đầu tiên
+            </p>
+        </field>
+    </record>
+
+    <!-- ==================== CÔNG NỢ PHẢI TRẢ ==================== -->
+    
+    <!-- Công nợ phải trả Form View -->
+    <record id="view_cong_no_tra_form" model="ir.ui.view">
+        <field name="name">cong.no.phai.tra.form</field>
+        <field name="model">cong_no_phai_tra</field>
+        <field name="arch" type="xml">
+            <form string="Công nợ phải trả">
+                <header>
+                    <button name="action_confirm" string="Xác nhận" type="object" 
+                            class="btn-primary" states="draft"/>
+                    <button name="action_cancel" string="Hủy" type="object" 
+                            class="btn-secondary" states="draft,open"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,open,partial,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_phieu_chi" type="object" class="oe_stat_button" icon="fa-credit-card">
+                            <field name="phieu_chi_count" string="Phiếu chi" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <div class="alert alert-danger" role="alert" attrs="{'invisible': [('is_overdue', '=', False)]}">
+                        <strong>⚠️ QUÁ HẠN:</strong> Đã quá hạn <field name="overdue_days" nolabel="1"/> ngày
+                    </div>
+                    <group>
+                        <group string="Thông tin chung">
+                            <field name="partner_id"/>
+                            <field name="origin_type"/>
+                            <field name="origin"/>
+                            <field name="phonban_id"/>
+                            <field name="nhan_vien_id"/>
+                        </group>
+                        <group string="Ngày">
+                            <field name="date"/>
+                            <field name="due_date"/>
+                            <field name="is_overdue" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Số tiền">
+                            <field name="amount"/>
+                            <field name="paid_amount"/>
+                            <field name="residual"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lịch sử thanh toán">
+                            <field name="payment_line_ids" readonly="1">
+                                <tree string="Lịch sử thanh toán">
+                                    <field name="date"/>
+                                    <field name="amount"/>
+                                    <field name="phieu_chi_id"/>
+                                    <field name="note"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Ghi chú">
+                            <field name="note" placeholder="Nhập ghi chú..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Công nợ phải trả Tree View -->
+    <record id="view_cong_no_tra_tree" model="ir.ui.view">
+        <field name="name">cong.no.phai.tra.tree</field>
+        <field name="model">cong_no_phai_tra</field>
+        <field name="arch" type="xml">
+            <tree string="Công nợ phải trả" decoration-danger="is_overdue==True" 
+                  decoration-success="state=='paid'" decoration-muted="state=='cancel'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="due_date"/>
+                <field name="amount" sum="Tổng nợ"/>
+                <field name="paid_amount" sum="Đã trả"/>
+                <field name="residual" sum="Còn nợ"/>
+                <field name="overdue_days"/>
+                <field name="state"/>
+                <field name="is_overdue" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Công nợ phải trả Search View -->
+    <record id="view_cong_no_tra_search" model="ir.ui.view">
+        <field name="name">cong.no.phai.tra.search</field>
+        <field name="model">cong_no_phai_tra</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm Công nợ phải trả">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="origin"/>
+                <filter string="Đang nợ" name="open" domain="[('state', 'in', ['open', 'partial'])]"/>
+                <filter string="Đã trả đủ" name="paid" domain="[('state', '=', 'paid')]"/>
+                <separator/>
+                <filter string="Quá hạn" name="overdue" domain="[('is_overdue', '=', True)]"/>
+                <separator/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Nhà cung cấp" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Tháng đáo hạn" name="group_due" context="{'group_by': 'due_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Công nợ phải trả Action -->
+    <record id="action_cong_no_tra" model="ir.actions.act_window">
+        <field name="name">Công nợ phải trả</field>
+        <field name="res_model">cong_no_phai_tra</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_cong_no_tra_search"/>
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo công nợ phải trả đầu tiên
+            </p>
+        </field>
+    </record>
+</odoo>

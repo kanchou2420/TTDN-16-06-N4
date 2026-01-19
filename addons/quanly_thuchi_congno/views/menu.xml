@@ -1,0 +1,11 @@
+<odoo>
+    <menuitem id="menu_thuchi_root" name="Thu Chi &amp; Công nợ" sequence="80" 
+              action="action_thuchi_dashboard_server"
+              web_icon="quanly_thuchi_congno,static/description/icon.png"/>
+    <menuitem id="menu_dashboard" name="Tổng Quan" parent="menu_thuchi_root" action="action_thuchi_dashboard_server" sequence="0"/>
+    <menuitem id="menu_phieu_thu" name="Phiếu Thu" parent="menu_thuchi_root" action="action_phieu_thu" sequence="1"/>
+    <menuitem id="menu_phieu_chi" name="Phiếu Chi" parent="menu_thuchi_root" action="action_phieu_chi" sequence="2"/>
+    <menuitem id="menu_cong_no" name="Công nợ" parent="menu_thuchi_root" sequence="3"/>
+    <menuitem id="menu_cong_no_thu" name="Phải thu" parent="menu_cong_no" action="action_cong_no_thu" sequence="1"/>
+    <menuitem id="menu_cong_no_tra" name="Phải trả" parent="menu_cong_no" action="action_cong_no_tra" sequence="2"/>
+</odoo>

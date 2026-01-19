@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Phiếu Chi Form View -->
+    <record id="view_phieu_chi_form" model="ir.ui.view">
+        <field name="name">phieu.chi.form</field>
+        <field name="model">phieu_chi</field>
+        <field name="arch" type="xml">
+            <form string="Phiếu Chi">
+                <header>
+                    <button name="action_confirm" string="Xác nhận" type="object" 
+                            class="btn-primary" states="draft"/>
+                    <button name="action_approve" string="Duyệt" type="object" 
+                            class="btn-primary" states="confirmed"/>
+                    <button name="action_post" string="Ghi sổ" type="object" 
+                            class="btn-primary" states="approved"/>
+                    <button name="action_cancel" string="Hủy" type="object" 
+                            class="btn-secondary" states="draft,confirmed,approved,posted"/>
+                    <button name="action_draft" string="Đặt về nháp" type="object" 
+                            class="btn-secondary" states="cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,approved,posted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <div class="alert alert-warning" role="alert" attrs="{'invisible': [('vuot_ngan_sach', '=', False)]}">
+                        <strong>⚠️ Cảnh báo:</strong> Số tiền chi vượt quá ngân sách còn lại (<field name="ngan_sach_con_lai" nolabel="1"/>)
+                    </div>
+                    <group>
+                        <group string="Thông tin chung">
+                            <field name="date"/>
+                            <field name="loai_chi"/>
+                            <field name="phuong_thuc"/>
+                            <field name="ly_do"/>
+                        </group>
+                        <group string="Đối tác">
+                            <field name="partner_id"/>
+                            <field name="partner_type"/>
+                            <field name="nguoi_nhan"/>
+                            <field name="phonban_id"/>
+                            <field name="nhan_vien_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Số tiền">
+                            <field name="amount"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="vuot_ngan_sach" invisible="1"/>
+                        </group>
+                        <group string="Liên kết">
+                            <field name="cong_no_id" attrs="{'invisible': [('loai_chi', '!=', 'chi_cong_no')]}"/>
+                            <field name="tai_san_id" attrs="{'invisible': [('loai_chi', '!=', 'chi_mua_sam')]}"/>
+                        </group>
+                    </group>
+                    <group string="Liên kết ngân sách">
+                        <group>
+                            <field name="ngan_sach_id"/>
+                            <field name="phan_bo_id"/>
+                            <field name="du_toan_chi_id"/>
+                        </group>
+                        <group>
+                            <field name="ngan_sach_con_lai" readonly="1"/>
+                            <field name="theo_doi_ngan_sach_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Phê duyệt" attrs="{'invisible': [('state', '=', 'draft')]}">
+                        <group>
+                            <field name="nguoi_xac_nhan_id" readonly="1"/>
+                            <field name="ngay_xac_nhan" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="nguoi_duyet_id" readonly="1"/>
+                            <field name="ngay_duyet" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Ghi chú">
+                            <field name="note" placeholder="Nhập ghi chú..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Phiếu Chi Tree View -->
+    <record id="view_phieu_chi_tree" model="ir.ui.view">
+        <field name="name">phieu.chi.tree</field>
+        <field name="model">phieu_chi</field>
+        <field name="arch" type="xml">
+            <tree string="Phiếu Chi" decoration-info="state=='draft'" 
+                  decoration-warning="state=='confirmed'" decoration-success="state=='posted'" 
+                  decoration-muted="state=='cancel'" decoration-danger="vuot_ngan_sach==True">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="loai_chi"/>
+                <field name="partner_id"/>
+                <field name="nguoi_nhan"/>
+                <field name="ly_do"/>
+                <field name="amount" sum="Tổng"/>
+                <field name="phuong_thuc"/>
+                <field name="state"/>
+                <field name="vuot_ngan_sach" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Phiếu Chi Search View -->
+    <record id="view_phieu_chi_search" model="ir.ui.view">
+        <field name="name">phieu.chi.search</field>
+        <field name="model">phieu_chi</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm Phiếu Chi">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="nguoi_nhan"/>
+                <field name="ly_do"/>
+                <filter string="Nháp" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Chờ duyệt" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Đã duyệt" name="approved" domain="[('state', '=', 'approved')]"/>
+                <filter string="Đã ghi sổ" name="posted" domain="[('state', '=', 'posted')]"/>
+                <separator/>
+                <filter string="Chi công nợ" name="chi_cong_no" domain="[('loai_chi', '=', 'chi_cong_no')]"/>
+                <filter string="Chi mua sắm" name="chi_mua_sam" domain="[('loai_chi', '=', 'chi_mua_sam')]"/>
+                <filter string="Chi lương" name="chi_luong" domain="[('loai_chi', '=', 'chi_luong')]"/>
+                <separator/>
+                <filter string="Vượt ngân sách" name="vuot_ns" domain="[('vuot_ngan_sach', '=', True)]"/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Đối tác" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Loại chi" name="group_loai" context="{'group_by': 'loai_chi'}"/>
+                    <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Phòng ban" name="group_pb" context="{'group_by': 'phonban_id'}"/>
+                    <filter string="Ngày" name="group_date" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Phiếu Chi Action -->
+    <record id="action_phieu_chi" model="ir.actions.act_window">
+        <field name="name">Phiếu Chi</field>
+        <field name="res_model">phieu_chi</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_phieu_chi_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo phiếu chi đầu tiên
+            </p>
+            <p>
+                Quản lý các khoản chi trả cho nhà cung cấp, mua sắm tài sản, lương nhân viên...
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_du_toan_chi_form" model="ir.ui.view">
+        <field name="name">du_toan_chi.form</field>
+        <field name="model">du_toan_chi</field>
+        <field name="arch" type="xml">
+            <form string="Dự Toán Chi">
+                <header>
+                    <button name="action_gui_duyet" string="Gửi duyệt" type="object" 
+                            class="oe_highlight" attrs="{'invisible': [('trang_thai', '!=', 'nhap')]}"/>
+                    <button name="action_duyet" string="Duyệt" type="object" 
+                            class="oe_highlight" attrs="{'invisible': [('trang_thai', '!=', 'cho_duyet')]}"/>
+                    <button name="action_tu_choi" string="Từ chối" type="object" 
+                            attrs="{'invisible': [('trang_thai', '!=', 'cho_duyet')]}"/>
+                    <button name="action_hoan_thanh" string="Hoàn thành" type="object" 
+                            attrs="{'invisible': [('trang_thai', '!=', 'duyet')]}"/>
+                    <field name="trang_thai" widget="statusbar" 
+                           statusbar_visible="nhap,cho_duyet,duyet,hoan_thanh"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ten_du_toan" placeholder="Tên dự toán..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="ma_du_toan"/>
+                            <field name="ngan_sach_id"/>
+                            <field name="loai_chi"/>
+                            <field name="phong_ban_id"/>
+                            <field name="danh_muc_ts_id" attrs="{'invisible': [('loai_chi', '!=', 'mua_sam_ts')]}"/>
+                        </group>
+                        <group>
+                            <field name="don_vi_tien_te"/>
+                            <field name="so_tien_du_kien" widget="monetary" options="{'currency_field': 'don_vi_tien_te'}"/>
+                            <field name="so_tien_duyet" widget="monetary" options="{'currency_field': 'don_vi_tien_te'}"/>
+                            <field name="thoi_gian_du_kien"/>
+                            <field name="uu_tien"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <field name="ly_do_de_xuat" placeholder="Lý do đề xuất dự toán..."/>
+                    </group>
+                    
+                    <group attrs="{'invisible': [('trang_thai', '!=', 'tu_choi')]}">
+                        <field name="ly_do_tu_choi" placeholder="Lý do từ chối..."/>
+                    </group>
+                    
+                    <group>
+                        <group string="File đính kèm">
+                            <field name="file_dinh_kem" filename="file_dinh_kem_filename"/>
+                            <field name="file_dinh_kem_filename" invisible="1"/>
+                        </group>
+                        <group string="Thông tin">
+                            <field name="nguoi_de_xuat"/>
+                            <field name="ngay_tao"/>
+                            <field name="nguoi_duyet"/>
+                            <field name="ngay_duyet"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <field name="ghi_chu" placeholder="Ghi chú..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_du_toan_chi_tree" model="ir.ui.view">
+        <field name="name">du_toan_chi.tree</field>
+        <field name="model">du_toan_chi</field>
+        <field name="arch" type="xml">
+            <tree string="Dự Toán Chi">
+                <field name="ma_du_toan"/>
+                <field name="ten_du_toan"/>
+                <field name="ngan_sach_id"/>
+                <field name="loai_chi"/>
+                <field name="phong_ban_id"/>
+                <field name="so_tien_du_kien" sum="Tổng dự kiến"/>
+                <field name="so_tien_duyet" sum="Tổng được duyệt"/>
+                <field name="uu_tien"/>
+                <field name="trang_thai" decoration-success="trang_thai == 'duyet'" 
+                       decoration-warning="trang_thai == 'cho_duyet'" 
+                       decoration-danger="trang_thai == 'tu_choi'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_du_toan_chi_search" model="ir.ui.view">
+        <field name="name">du_toan_chi.search</field>
+        <field name="model">du_toan_chi</field>
+        <field name="arch" type="xml">
+            <search string="Tìm Kiếm Dự Toán">
+                <field name="ma_du_toan"/>
+                <field name="ten_du_toan"/>
+                <field name="ngan_sach_id"/>
+                <filter string="Nháp" name="nhap" domain="[('trang_thai', '=', 'nhap')]"/>
+                <filter string="Chờ duyệt" name="cho_duyet" domain="[('trang_thai', '=', 'cho_duyet')]"/>
+                <filter string="Đã duyệt" name="duyet" domain="[('trang_thai', '=', 'duyet')]"/>
+                <filter string="Ưu tiên cao" name="uu_tien_cao" domain="[('uu_tien', '=', 'cao')]"/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Ngân sách" name="group_ngan_sach" context="{'group_by': 'ngan_sach_id'}"/>
+                    <filter string="Loại chi" name="group_loai_chi" context="{'group_by': 'loai_chi'}"/>
+                    <filter string="Phòng ban" name="group_phong_ban" context="{'group_by': 'phong_ban_id'}"/>
+                    <filter string="Trạng thái" name="group_trang_thai" context="{'group_by': 'trang_thai'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_du_toan_chi" model="ir.actions.act_window">
+        <field name="name">Dự Toán Chi</field>
+        <field name="res_model">du_toan_chi</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo dự toán chi mới
+            </p>
+            <p>
+                Lập dự toán chi tiết cho các hoạt động và dự án.
+            </p>
+        </field>
+    </record>
+</odoo>

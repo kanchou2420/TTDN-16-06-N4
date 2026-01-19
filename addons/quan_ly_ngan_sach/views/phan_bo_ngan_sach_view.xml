@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_phan_bo_ngan_sach_form" model="ir.ui.view">
+        <field name="name">phan_bo_ngan_sach.form</field>
+        <field name="model">phan_bo_ngan_sach</field>
+        <field name="arch" type="xml">
+            <form string="Phân Bổ Ngân Sách">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ten_phan_bo" placeholder="Tên phân bổ..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="ma_phan_bo"/>
+                            <field name="ngan_sach_id"/>
+                            <field name="loai_phan_bo"/>
+                            <field name="phong_ban_id" attrs="{'invisible': [('loai_phan_bo', '!=', 'phong_ban')], 'required': [('loai_phan_bo', '=', 'phong_ban')]}"/>
+                            <field name="danh_muc_ts_id" attrs="{'invisible': [('loai_phan_bo', '!=', 'danh_muc_ts')], 'required': [('loai_phan_bo', '=', 'danh_muc_ts')]}"/>
+                        </group>
+                        <group>
+                            <field name="don_vi_tien_te"/>
+                            <field name="so_tien" widget="monetary" options="{'currency_field': 'don_vi_tien_te'}"/>
+                            <field name="so_tien_da_su_dung" widget="monetary" options="{'currency_field': 'don_vi_tien_te'}"/>
+                            <field name="so_tien_con_lai" widget="monetary" options="{'currency_field': 'don_vi_tien_te'}"/>
+                            <field name="ty_le_su_dung" widget="progressbar"/>
+                            <field name="trang_thai"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <group>
+                            <field name="ngay_bat_dau"/>
+                            <field name="ngay_ket_thuc"/>
+                            <field name="nguoi_phu_trach"/>
+                        </group>
+                        <group>
+                            <field name="nguoi_tao"/>
+                            <field name="ngay_phan_bo"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <field name="muc_dich" placeholder="Mục đích sử dụng ngân sách..."/>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Theo Dõi Chi Tiêu">
+                            <field name="theo_doi_ids">
+                                <tree>
+                                    <field name="ma_giao_dich"/>
+                                    <field name="ngay_giao_dich"/>
+                                    <field name="loai_giao_dich"/>
+                                    <field name="noi_dung"/>
+                                    <field name="so_tien_thuc_te" sum="Tổng"/>
+                                    <field name="trang_thai"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    
+                    <group>
+                        <field name="ghi_chu" placeholder="Ghi chú..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_phan_bo_ngan_sach_tree" model="ir.ui.view">
+        <field name="name">phan_bo_ngan_sach.tree</field>
+        <field name="model">phan_bo_ngan_sach</field>
+        <field name="arch" type="xml">
+            <tree string="Phân Bổ Ngân Sách">
+                <field name="ma_phan_bo"/>
+                <field name="ten_phan_bo"/>
+                <field name="ngan_sach_id"/>
+                <field name="loai_phan_bo"/>
+                <field name="phong_ban_id"/>
+                <field name="so_tien" sum="Tổng phân bổ"/>
+                <field name="so_tien_da_su_dung" sum="Tổng đã sử dụng"/>
+                <field name="so_tien_con_lai" sum="Tổng còn lại"/>
+                <field name="ty_le_su_dung" widget="progressbar"/>
+                <field name="trang_thai" decoration-success="trang_thai == 'dang_su_dung'" 
+                       decoration-danger="trang_thai == 'het'" 
+                       decoration-muted="trang_thai == 'het_han'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_phan_bo_ngan_sach_search" model="ir.ui.view">
+        <field name="name">phan_bo_ngan_sach.search</field>
+        <field name="model">phan_bo_ngan_sach</field>
+        <field name="arch" type="xml">
+            <search string="Tìm Kiếm Phân Bổ">
+                <field name="ma_phan_bo"/>
+                <field name="ten_phan_bo"/>
+                <field name="ngan_sach_id"/>
+                <field name="phong_ban_id"/>
+                <filter string="Chưa sử dụng" name="chua_su_dung" domain="[('trang_thai', '=', 'chua_su_dung')]"/>
+                <filter string="Đang sử dụng" name="dang_su_dung" domain="[('trang_thai', '=', 'dang_su_dung')]"/>
+                <filter string="Đã hết" name="het" domain="[('trang_thai', '=', 'het')]"/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Ngân sách" name="group_ngan_sach" context="{'group_by': 'ngan_sach_id'}"/>
+                    <filter string="Loại phân bổ" name="group_loai" context="{'group_by': 'loai_phan_bo'}"/>
+                    <filter string="Phòng ban" name="group_phong_ban" context="{'group_by': 'phong_ban_id'}"/>
+                    <filter string="Trạng thái" name="group_trang_thai" context="{'group_by': 'trang_thai'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_phan_bo_ngan_sach" model="ir.actions.act_window">
+        <field name="name">Phân Bổ Ngân Sách</field>
+        <field name="res_model">phan_bo_ngan_sach</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo phân bổ ngân sách mới
+            </p>
+            <p>
+                Phân bổ ngân sách cho các phòng ban, danh mục tài sản và hoạt động.
+            </p>
+        </field>
+    </record>
+</odoo>

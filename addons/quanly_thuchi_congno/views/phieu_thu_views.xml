@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Phiếu Thu Form View -->
+    <record id="view_phieu_thu_form" model="ir.ui.view">
+        <field name="name">phieu.thu.form</field>
+        <field name="model">phieu_thu</field>
+        <field name="arch" type="xml">
+            <form string="Phiếu Thu">
+                <header>
+                    <button name="action_confirm" string="Xác nhận" type="object" 
+                            class="btn-primary" states="draft"/>
+                    <button name="action_post" string="Ghi sổ" type="object" 
+                            class="btn-primary" states="confirmed"/>
+                    <button name="action_cancel" string="Hủy" type="object" 
+                            class="btn-secondary" states="draft,confirmed,posted"/>
+                    <button name="action_draft" string="Đặt về nháp" type="object" 
+                            class="btn-secondary" states="cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,posted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Thông tin chung">
+                            <field name="date"/>
+                            <field name="loai_thu"/>
+                            <field name="phuong_thuc"/>
+                            <field name="ly_do"/>
+                        </group>
+                        <group string="Đối tác">
+                            <field name="partner_id"/>
+                            <field name="partner_type"/>
+                            <field name="phonban_id"/>
+                            <field name="nhan_vien_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Số tiền">
+                            <field name="amount"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                        <group string="Liên kết">
+                            <field name="cong_no_id" attrs="{'invisible': [('loai_thu', '!=', 'thu_cong_no')]}"/>
+                            <field name="thanh_ly_id" attrs="{'invisible': [('loai_thu', '!=', 'thu_thanh_ly')]}"/>
+                        </group>
+                    </group>
+                    <group string="Liên kết ngân sách">
+                        <group>
+                            <field name="ngan_sach_id"/>
+                            <field name="phan_bo_id"/>
+                        </group>
+                        <group>
+                            <field name="theo_doi_ngan_sach_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Phê duyệt" attrs="{'invisible': [('state', '=', 'draft')]}">
+                        <group>
+                            <field name="nguoi_duyet_id" readonly="1"/>
+                            <field name="ngay_duyet" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Ghi chú">
+                            <field name="note" placeholder="Nhập ghi chú..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Phiếu Thu Tree View -->
+    <record id="view_phieu_thu_tree" model="ir.ui.view">
+        <field name="name">phieu.thu.tree</field>
+        <field name="model">phieu_thu</field>
+        <field name="arch" type="xml">
+            <tree string="Phiếu Thu" decoration-info="state=='draft'" 
+                  decoration-success="state=='posted'" decoration-muted="state=='cancel'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="loai_thu"/>
+                <field name="partner_id"/>
+                <field name="ly_do"/>
+                <field name="amount" sum="Tổng"/>
+                <field name="phuong_thuc"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Phiếu Thu Search View -->
+    <record id="view_phieu_thu_search" model="ir.ui.view">
+        <field name="name">phieu.thu.search</field>
+        <field name="model">phieu_thu</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm Phiếu Thu">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="ly_do"/>
+                <filter string="Nháp" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Đã xác nhận" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Đã ghi sổ" name="posted" domain="[('state', '=', 'posted')]"/>
+                <separator/>
+                <filter string="Thu công nợ" name="thu_cong_no" domain="[('loai_thu', '=', 'thu_cong_no')]"/>
+                <filter string="Thu thanh lý" name="thu_thanh_ly" domain="[('loai_thu', '=', 'thu_thanh_ly')]"/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Đối tác" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Loại thu" name="group_loai" context="{'group_by': 'loai_thu'}"/>
+                    <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Ngày" name="group_date" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Phiếu Thu Action -->
+    <record id="action_phieu_thu" model="ir.actions.act_window">
+        <field name="name">Phiếu Thu</field>
+        <field name="res_model">phieu_thu</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_phieu_thu_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo phiếu thu đầu tiên
+            </p>
+            <p>
+                Quản lý các khoản thu từ khách hàng, thanh lý tài sản, hoàn tạm ứng...
+            </p>
+        </field>
+    </record>
+</odoo>

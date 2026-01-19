@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Dashboard Form View -->
+    <record id="view_thuchi_dashboard_form" model="ir.ui.view">
+        <field name="name">thuchi.dashboard.form</field>
+        <field name="model">thuchi.dashboard</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <sheet>
+                    <div class="oe_title text-center">
+                        <h1> Tổng Quan Thu Chi &amp; Công Nợ</h1>
+                    </div>
+                    
+                    <!-- Cân đối tổng quan -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="alert alert-info text-center" role="alert">
+                                <h4> Cân đối tổng: <field name="can_doi" widget="monetary"/> VNĐ</h4>
+                                <span>Cân đối tháng này: <field name="can_doi_thang" widget="monetary"/> VNĐ</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 1: Phiếu Thu và Phiếu Chi -->
+                    <div class="row">
+                        <!-- PHIẾU THU -->
+                        <div class="col-lg-6">
+                            <div class="card mb-3" style="border: 2px solid #28a745;">
+                                <div class="card-header text-white" style="background-color: #28a745;">
+                                    <h4 class="mb-0">📥 PHIẾU THU</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center mb-3">
+                                        <div class="col-3">
+                                            <h5 class="text-muted">Tổng</h5>
+                                            <h3><field name="tong_phieu_thu"/></h3>
+                                        </div>
+                                        <div class="col-3">
+                                            <h5 class="text-warning">Nháp</h5>
+                                            <h3 class="text-warning"><field name="phieu_thu_nhap"/></h3>
+                                        </div>
+                                        <div class="col-3">
+                                            <h5 class="text-info">Xác nhận</h5>
+                                            <h3 class="text-info"><field name="phieu_thu_xacnhan"/></h3>
+                                        </div>
+                                        <div class="col-3">
+                                            <h5 class="text-success">Ghi sổ</h5>
+                                            <h3 class="text-success"><field name="phieu_thu_posted"/></h3>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row text-center">
+                                        <div class="col-6">
+                                            <span class="text-muted">Tổng tiền thu:</span><br/>
+                                            <strong class="text-success" style="font-size: 1.2em;">
+                                                <field name="tong_tien_thu" widget="monetary"/>
+                                            </strong>
+                                        </div>
+                                        <div class="col-6">
+                                            <span class="text-muted">Thu tháng này:</span><br/>
+                                            <strong class="text-success" style="font-size: 1.2em;">
+                                                <field name="tong_tien_thu_thang" widget="monetary"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="text-center">
+                                        <button name="action_view_phieu_thu" type="object" class="btn btn-success mr-2">
+                                             Xem tất cả
+                                        </button>
+                                        <button name="action_view_phieu_thu_draft" type="object" class="btn btn-outline-warning">
+                                             Phiếu nháp
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- PHIẾU CHI -->
+                        <div class="col-lg-6">
+                            <div class="card mb-3" style="border: 2px solid #dc3545;">
+                                <div class="card-header text-white" style="background-color: #dc3545;">
+                                    <h4 class="mb-0">📤 PHIẾU CHI</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center mb-3">
+                                        <div class="col-3">
+                                            <h5 class="text-muted">Tổng</h5>
+                                            <h3><field name="tong_phieu_chi"/></h3>
+                                        </div>
+                                        <div class="col-3">
+                                            <h5 class="text-warning">Nháp</h5>
+                                            <h3 class="text-warning"><field name="phieu_chi_nhap"/></h3>
+                                        </div>
+                                        <div class="col-3">
+                                            <h5 class="text-info">Chờ duyệt</h5>
+                                            <h3 class="text-info"><field name="phieu_chi_cho_duyet"/></h3>
+                                        </div>
+                                        <div class="col-3">
+                                            <h5 class="text-success">Ghi sổ</h5>
+                                            <h3 class="text-success"><field name="phieu_chi_posted"/></h3>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row text-center">
+                                        <div class="col-6">
+                                            <span class="text-muted">Tổng tiền chi:</span><br/>
+                                            <strong class="text-danger" style="font-size: 1.2em;">
+                                                <field name="tong_tien_chi" widget="monetary"/>
+                                            </strong>
+                                        </div>
+                                        <div class="col-6">
+                                            <span class="text-muted">Chi tháng này:</span><br/>
+                                            <strong class="text-danger" style="font-size: 1.2em;">
+                                                <field name="tong_tien_chi_thang" widget="monetary"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="text-center">
+                                        <button name="action_view_phieu_chi" type="object" class="btn btn-danger mr-2">
+                                             Xem tất cả
+                                        </button>
+                                        <button name="action_view_phieu_chi_pending" type="object" class="btn btn-outline-warning">
+                                             Chờ duyệt
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 2: Công Nợ -->
+                    <div class="row">
+                        <!-- CÔNG NỢ PHẢI THU -->
+                        <div class="col-lg-6">
+                            <div class="card mb-3" style="border: 2px solid #17a2b8;">
+                                <div class="card-header text-white" style="background-color: #17a2b8;">
+                                    <h4 class="mb-0">👥 CÔNG NỢ PHẢI THU</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center mb-3">
+                                        <div class="col-4">
+                                            <h5 class="text-muted">Tổng số</h5>
+                                            <h3><field name="tong_cong_no_thu"/></h3>
+                                        </div>
+                                        <div class="col-4">
+                                            <h5 class="text-danger">Quá hạn</h5>
+                                            <h3 class="text-danger"><field name="cong_no_thu_qua_han"/></h3>
+                                        </div>
+                                        <div class="col-4">
+                                            <h5 class="text-info">Còn phải thu</h5>
+                                            <strong class="text-info">
+                                                <field name="tong_tien_phai_thu" widget="monetary"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button name="action_view_cong_no_thu" type="object" class="btn btn-info mr-2">
+                                             Xem tất cả
+                                        </button>
+                                        <button name="action_view_cong_no_thu_overdue" type="object" class="btn btn-outline-danger">
+                                             Quá hạn
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- CÔNG NỢ PHẢI TRẢ -->
+                        <div class="col-lg-6">
+                            <div class="card mb-3" style="border: 2px solid #ffc107;">
+                                <div class="card-header" style="background-color: #ffc107;">
+                                    <h4 class="mb-0"> CÔNG NỢ PHẢI TRẢ</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center mb-3">
+                                        <div class="col-4">
+                                            <h5 class="text-muted">Tổng số</h5>
+                                            <h3><field name="tong_cong_no_tra"/></h3>
+                                        </div>
+                                        <div class="col-4">
+                                            <h5 class="text-danger">Quá hạn</h5>
+                                            <h3 class="text-danger"><field name="cong_no_tra_qua_han"/></h3>
+                                        </div>
+                                        <div class="col-4">
+                                            <h5 class="text-warning">Còn phải trả</h5>
+                                            <strong class="text-warning">
+                                                <field name="tong_tien_phai_tra" widget="monetary"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button name="action_view_cong_no_tra" type="object" class="btn btn-warning mr-2">
+                                             Xem tất cả
+                                        </button>
+                                        <button name="action_view_cong_no_tra_overdue" type="object" class="btn btn-outline-danger">
+                                             Quá hạn
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Dashboard Action - Server Action to open dashboard -->
+    <record id="action_thuchi_dashboard_server" model="ir.actions.server">
+        <field name="name">Tổng Quan Thu Chi</field>
+        <field name="model_id" ref="model_thuchi_dashboard"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_open_dashboard()</field>
+    </record>
+
+    <!-- Actions cho các quick access -->
+    <record id="action_dashboard_phieu_thu" model="ir.actions.act_window">
+        <field name="name">Phiếu Thu</field>
+        <field name="res_model">phieu_thu</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_dashboard_phieu_chi" model="ir.actions.act_window">
+        <field name="name">Phiếu Chi</field>
+        <field name="res_model">phieu_chi</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_dashboard_cong_no_thu" model="ir.actions.act_window">
+        <field name="name">Công Nợ Phải Thu</field>
+        <field name="res_model">cong_no_phai_thu</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_dashboard_cong_no_tra" model="ir.actions.act_window">
+        <field name="name">Công Nợ Phải Trả</field>
+        <field name="res_model">cong_no_phai_tra</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

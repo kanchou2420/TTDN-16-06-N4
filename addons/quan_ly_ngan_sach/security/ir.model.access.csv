@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ngan_sach_user,access_ngan_sach_user,model_ngan_sach,base.group_user,1,1,1,1
+access_du_toan_chi_user,access_du_toan_chi_user,model_du_toan_chi,base.group_user,1,1,1,1
+access_phan_bo_ngan_sach_user,access_phan_bo_ngan_sach_user,model_phan_bo_ngan_sach,base.group_user,1,1,1,1
+access_theo_doi_thuc_hien_ngan_sach_user,access_theo_doi_thuc_hien_ngan_sach_user,model_theo_doi_thuc_hien_ngan_sach,base.group_user,1,1,1,1
+access_budget_dashboard_user,access_budget_dashboard_user,model_budget_dashboard,base.group_user,1,0,0,0

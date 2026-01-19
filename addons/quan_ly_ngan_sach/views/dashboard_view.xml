@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="budget_dashboard_overview_view" model="ir.ui.view">
+            <field name="name">budget.dashboard.view.form</field>
+            <field name="model">budget.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard Ngân Sách" js_class="budget_dashboard_view" create="0" edit="0" delete="0">
+                    <div class="o_budget_dashboard">
+                        <div class="container-fluid o_dashboard_common">
+                            <!-- Header -->
+                            <div class="dashboard-header mb-4">
+                                <h1 class="dashboard-title">
+                                    <i class="fa fa-chart-line mr-2"></i>
+                                    Dashboard Quản Lý Ngân Sách
+                                </h1>
+                                <p class="text-muted">Tổng quan tình hình ngân sách và chi tiêu</p>
+                            </div>
+                            
+                            <!-- Summary Cards Row 1 -->
+                            <div class="row mb-4 o_dashboard_stat_cards">
+                                <div class="col-lg-3 col-md-6 mb-3">
+                                    <div class="card stat-card bg-gradient-primary text-white h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="text-uppercase mb-1 opacity-75">Tổng Ngân Sách</h6>
+                                                    <h2 class="mb-0 total_budget_amount">0 VNĐ</h2>
+                                                </div>
+                                                <div class="stat-icon">
+                                                    <i class="fa fa-wallet fa-2x opacity-50"></i>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2">
+                                                <span class="badge bg-light text-primary total_budgets_count">0</span>
+                                                <small class="opacity-75 ml-1">ngân sách</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-3">
+                                    <div class="card stat-card bg-gradient-success text-white h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="text-uppercase mb-1 opacity-75">Đã Phân Bổ</h6>
+                                                    <h2 class="mb-0 total_allocated">0 VNĐ</h2>
+                                                </div>
+                                                <div class="stat-icon">
+                                                    <i class="fa fa-pie-chart fa-2x opacity-50"></i>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2">
+                                                <span class="badge bg-light text-success allocation_in_use">0</span>
+                                                <small class="opacity-75 ml-1">đang sử dụng</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-3">
+                                    <div class="card stat-card bg-gradient-info text-white h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="text-uppercase mb-1 opacity-75">Còn Lại</h6>
+                                                    <h2 class="mb-0 total_remaining">0 VNĐ</h2>
+                                                </div>
+                                                <div class="stat-icon">
+                                                    <i class="fa fa-coins fa-2x opacity-50"></i>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2">
+                                                <span class="badge bg-light text-info remaining_percentage">0%</span>
+                                                <small class="opacity-75 ml-1">khả dụng</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-3">
+                                    <div class="card stat-card bg-gradient-warning text-white h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="text-uppercase mb-1 opacity-75">Đã Chi Tiêu</h6>
+                                                    <h2 class="mb-0 total_spent">0 VNĐ</h2>
+                                                </div>
+                                                <div class="stat-icon">
+                                                    <i class="fa fa-money-bill-wave fa-2x opacity-50"></i>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2">
+                                                <span class="badge bg-light text-warning completed_transactions">0</span>
+                                                <small class="opacity-75 ml-1">giao dịch</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Status Cards Row -->
+                            <div class="row mb-4">
+                                <div class="col-lg-3 col-md-6 mb-3">
+                                    <div class="card mini-stat-card h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fa fa-file-text fa-2x text-secondary mb-2"></i>
+                                            <h3 class="text-secondary draft_budgets">0</h3>
+                                            <small class="text-muted">Ngân sách nháp</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-3">
+                                    <div class="card mini-stat-card h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fa fa-check-circle fa-2x text-info mb-2"></i>
+                                            <h3 class="text-info approved_budgets">0</h3>
+                                            <small class="text-muted">Đã duyệt</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-3">
+                                    <div class="card mini-stat-card h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fa fa-spinner fa-2x text-success mb-2"></i>
+                                            <h3 class="text-success active_budgets">0</h3>
+                                            <small class="text-muted">Đang thực hiện</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-3">
+                                    <div class="card mini-stat-card h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fa fa-clock-o fa-2x text-warning mb-2"></i>
+                                            <h3 class="text-warning pending_estimates">0</h3>
+                                            <small class="text-muted">Dự toán chờ duyệt</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Charts Section -->
+                            <div class="row mb-4">
+                                <div class="col-lg-8 mb-3">
+                                    <div class="card chart-card h-100">
+                                        <div class="card-header bg-gradient-dark text-white">
+                                            <h5 class="mb-0">
+                                                <i class="fa fa-line-chart mr-2"></i>
+                                                Xu Hướng Chi Tiêu Theo Tháng
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <canvas id="monthlySpendingChart" height="300"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 mb-3">
+                                    <div class="card chart-card h-100">
+                                        <div class="card-header bg-gradient-primary text-white">
+                                            <h5 class="mb-0">
+                                                <i class="fa fa-pie-chart mr-2"></i>
+                                                Trạng Thái Ngân Sách
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <canvas id="budgetStatusChart" height="250"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-lg-6 mb-3">
+                                    <div class="card chart-card h-100">
+                                        <div class="card-header bg-gradient-success text-white">
+                                            <h5 class="mb-0">
+                                                <i class="fa fa-building mr-2"></i>
+                                                Phân Bổ Theo Phòng Ban
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <canvas id="departmentChart" height="280"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-3">
+                                    <div class="card chart-card h-100">
+                                        <div class="card-header bg-gradient-info text-white">
+                                            <h5 class="mb-0">
+                                                <i class="fa fa-tags mr-2"></i>
+                                                Dự Toán Theo Loại Chi
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <canvas id="expenseTypeChart" height="280"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Warning Section -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="card warning-card">
+                                        <div class="card-header bg-gradient-danger text-white">
+                                            <h5 class="mb-0">
+                                                <i class="fa fa-exclamation-triangle mr-2"></i>
+                                                Cảnh Báo Ngân Sách Sắp Hết
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="warning-list">
+                                                <p class="text-muted no-warnings">Không có cảnh báo nào</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Stats Row -->
+                            <div class="row">
+                                <div class="col-lg-4 mb-3">
+                                    <div class="card info-card h-100">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">
+                                                <i class="fa fa-file-invoice-dollar mr-2"></i>
+                                                Thống Kê Dự Toán
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>Tổng dự toán:</span>
+                                                    <strong class="total_estimates">0</strong>
+                                                </li>
+                                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>Đã duyệt:</span>
+                                                    <strong class="text-success approved_estimates">0</strong>
+                                                </li>
+                                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>Từ chối:</span>
+                                                    <strong class="text-danger rejected_estimates">0</strong>
+                                                </li>
+                                                <li class="d-flex justify-content-between py-2">
+                                                    <span>Tổng giá trị duyệt:</span>
+                                                    <strong class="text-primary total_approved_amount">0 VNĐ</strong>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 mb-3">
+                                    <div class="card info-card h-100">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">
+                                                <i class="fa fa-share-alt mr-2"></i>
+                                                Thống Kê Phân Bổ
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>Tổng phân bổ:</span>
+                                                    <strong class="total_allocations">0</strong>
+                                                </li>
+                                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>Đang sử dụng:</span>
+                                                    <strong class="text-success allocation_in_use_count">0</strong>
+                                                </li>
+                                                <li class="d-flex justify-content-between py-2">
+                                                    <span>Đã hết:</span>
+                                                    <strong class="text-danger allocation_exhausted">0</strong>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 mb-3">
+                                    <div class="card info-card h-100">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">
+                                                <i class="fa fa-exchange mr-2"></i>
+                                                Thống Kê Giao Dịch
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>Tổng giao dịch:</span>
+                                                    <strong class="total_transactions">0</strong>
+                                                </li>
+                                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>Chờ duyệt:</span>
+                                                    <strong class="text-warning pending_transactions">0</strong>
+                                                </li>
+                                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>Đã hoàn thành:</span>
+                                                    <strong class="text-success completed_transactions_count">0</strong>
+                                                </li>
+                                                <li class="d-flex justify-content-between py-2">
+                                                    <span>Thu hồi:</span>
+                                                    <strong class="text-info total_recovered">0 VNĐ</strong>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_budget_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard Ngân Sách</field>
+            <field name="res_model">budget.dashboard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="budget_dashboard_overview_view"/>
+            <field name="target">current</field>
+        </record>
+    </data>
+</odoo>

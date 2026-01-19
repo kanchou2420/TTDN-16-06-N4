@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_phieu_thu_user,phieu_thu.user,model_phieu_thu,base.group_user,1,1,1,1
+access_phieu_chi_user,phieu_chi.user,model_phieu_chi,base.group_user,1,1,1,1
+access_cong_no_thu_user,cong_no_thu.user,model_cong_no_phai_thu,base.group_user,1,1,1,1
+access_cong_no_tra_user,cong_no_tra.user,model_cong_no_phai_tra,base.group_user,1,1,1,1
+access_cong_no_thu_payment_user,cong_no_thu_payment.user,model_cong_no_phai_thu_payment,base.group_user,1,1,1,1
+access_cong_no_tra_payment_user,cong_no_tra_payment.user,model_cong_no_phai_tra_payment,base.group_user,1,1,1,1
+access_thuchi_dashboard_user,thuchi_dashboard.user,model_thuchi_dashboard,base.group_user,1,1,1,1

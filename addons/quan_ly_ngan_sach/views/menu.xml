@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu Root -->
+    <menuitem id="menu_quan_ly_ngan_sach_root"
+              name="Quản Lý Ngân Sách"
+              sequence="10"
+              web_icon="quan_ly_ngan_sach,static/description/icon.png"/>
+
+    <!-- Menu Dashboard -->
+    <menuitem id="menu_ngan_sach_dashboard"
+              name="Dashboard"
+              parent="menu_quan_ly_ngan_sach_root"
+              action="action_budget_dashboard"
+              sequence="1"/>
+
+    <!-- Menu Ngân Sách -->
+    <menuitem id="menu_ngan_sach"
+              name="Ngân Sách"
+              parent="menu_quan_ly_ngan_sach_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ngan_sach_list"
+              name="Danh Sách Ngân Sách"
+              parent="menu_ngan_sach"
+              action="action_ngan_sach"
+              sequence="1"/>
+
+    <menuitem id="menu_du_toan_chi"
+              name="Dự Toán Chi"
+              parent="menu_ngan_sach"
+              action="action_du_toan_chi"
+              sequence="2"/>
+
+    <!-- Menu Phân Bổ &amp; Thực Hiện -->
+    <menuitem id="menu_phan_bo_thuc_hien"
+              name="Phân Bổ &amp; Thực Hiện"
+              parent="menu_quan_ly_ngan_sach_root"
+              sequence="20"/>
+
+    <menuitem id="menu_phan_bo_ngan_sach"
+              name="Phân Bổ Ngân Sách"
+              parent="menu_phan_bo_thuc_hien"
+              action="action_phan_bo_ngan_sach"
+              sequence="1"/>
+
+    <menuitem id="menu_theo_doi_thuc_hien"
+              name="Theo Dõi Thực Hiện"
+              parent="menu_phan_bo_thuc_hien"
+              action="action_theo_doi_thuc_hien"
+              sequence="2"/>
+
+    <!-- Menu Báo Cáo -->
+    <menuitem id="menu_bao_cao"
+              name="Báo Cáo"
+              parent="menu_quan_ly_ngan_sach_root"
+              sequence="30"/>
+
+    <menuitem id="menu_bao_cao_tong_hop"
+              name="Báo Cáo Tổng Hợp"
+              parent="menu_bao_cao"
+              sequence="1"/>
+
+    <menuitem id="menu_bao_cao_theo_phong_ban"
+              name="Báo Cáo Theo Phòng Ban"
+              parent="menu_bao_cao"
+              sequence="2"/>
+
+    <menuitem id="menu_bao_cao_theo_danh_muc"
+              name="Báo Cáo Theo Danh Mục"
+              parent="menu_bao_cao"
+              sequence="3"/>
+
+    <!-- Menu Cấu Hình -->
+    <menuitem id="menu_cau_hinh"
+              name="Cấu Hình"
+              parent="menu_quan_ly_ngan_sach_root"
+              sequence="40"/>
+</odoo>
