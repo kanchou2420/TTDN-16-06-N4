@@ -33,6 +33,33 @@ class DuToanChi(models.Model):
     so_tien_du_kien = fields.Float('Số tiền dự kiến', required=True, default=0)
     so_tien_duyet = fields.Float('Số tiền được duyệt', default=0)
     
+    # FIX: Thêm trường theo dõi "đã chi thực tế" để so sánh với dự toán
+    # Trường này tự động cập nhật khi lập phiếu chi
+    da_chi_thuc_te = fields.Float(
+        'Đã chi thực tế',
+        default=0,
+        readonly=True,
+        help='Tự động cập nhật từ phiếu chi - dùng để so sánh với dự toán'
+    )
+    con_lai_chi = fields.Float(
+        'Còn lại chi',
+        compute='_compute_con_lai_chi',
+        store=True,
+        help='Số tiền còn được phép chi = so_tien_duyet - da_chi_thuc_te'
+    )
+    tien_tiet_kiem = fields.Float(
+        'Tiết kiệm',
+        compute='_compute_tien_tiet_kiem',
+        store=True,
+        help='Tính được tiết kiệm = so_tien_duyet - da_chi_thuc_te (nếu > 0)'
+    )
+    tien_vuot = fields.Float(
+        'Vượt',
+        compute='_compute_tien_vuot',
+        store=True,
+        help='Nếu da_chi > so_tien_duyet'
+    )
+    
     don_vi_tien_te = fields.Selection([
         ('vnd', 'VNĐ'),
         ('usd', 'USD'),
@@ -65,6 +92,31 @@ class DuToanChi(models.Model):
     # File đính kèm
     file_dinh_kem = fields.Binary('File đính kèm', attachment=True)
     file_dinh_kem_filename = fields.Char('Tên file')
+    
+    # FIX: Thêm các hàm tính toán cho "đã chi thực tế"
+    @api.depends('so_tien_duyet', 'da_chi_thuc_te')
+    def _compute_con_lai_chi(self):
+        """Tính số tiền còn lại được phép chi"""
+        for record in self:
+            record.con_lai_chi = record.so_tien_duyet - record.da_chi_thuc_te
+    
+    @api.depends('so_tien_duyet', 'da_chi_thuc_te')
+    def _compute_tien_tiet_kiem(self):
+        """Tính tiết kiệm (nếu chi ít hơn dự toán)"""
+        for record in self:
+            if record.da_chi_thuc_te < record.so_tien_duyet:
+                record.tien_tiet_kiem = record.so_tien_duyet - record.da_chi_thuc_te
+            else:
+                record.tien_tiet_kiem = 0
+    
+    @api.depends('so_tien_duyet', 'da_chi_thuc_te')
+    def _compute_tien_vuot(self):
+        """Tính tiền vượt (nếu chi nhiều hơn dự toán)"""
+        for record in self:
+            if record.da_chi_thuc_te > record.so_tien_duyet:
+                record.tien_vuot = record.da_chi_thuc_te - record.so_tien_duyet
+            else:
+                record.tien_vuot = 0
     
     @api.constrains('so_tien_du_kien')
     def _check_so_tien(self):

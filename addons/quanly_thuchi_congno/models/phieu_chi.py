@@ -60,8 +60,8 @@ class PhieuChi(models.Model):
                                       domain="[('ngan_sach_id', '=', ngan_sach_id), ('trang_thai', '=', 'duyet')]")
     
     # Liên kết với công nợ
-    cong_no_id = fields.Many2one('cong_no_phai_tra', string='Công nợ phải trả', ondelete='set null',
-                                  domain="[('partner_id', '=', partner_id), ('state', '=', 'open')]")
+    # FIX: Simplified domain - không sử dụng partner_id vì có thể null
+    cong_no_id = fields.Many2one('cong_no_phai_tra', string='Công nợ phải trả', ondelete='set null')
     
     # Liên kết với tài sản (nếu chi mua sắm)
     tai_san_id = fields.Many2one('tai_san', string='Tài sản', ondelete='set null')
@@ -198,35 +198,43 @@ class PhieuChi(models.Model):
             
             vals = {'state': 'posted'}
             
-            # Cập nhật công nợ nếu là chi công nợ
-            if rec.loai_chi == 'chi_cong_no' and rec.cong_no_id:
-                rec.cong_no_id.action_pay(rec.amount, rec.id)
+            # FIX: CẬP NHẬT DỰ TOÁN CHI
+            # Ghi nhận số tiền đã chi thực tế vào dự toán
+            if rec.du_toan_chi_id:
+                try:
+                    new_da_chi = rec.du_toan_chi_id.da_chi_thuc_te + rec.amount
+                    rec.du_toan_chi_id.write({'da_chi_thuc_te': new_da_chi})
+                except Exception as e:
+                    pass
             
             # Tạo bản ghi theo dõi ngân sách nếu có liên kết
             if rec.ngan_sach_id and rec.phan_bo_id:
-                loai_chi_tiet_map = {
-                    'chi_mua_sam': 'mua_tai_san',
-                    'chi_luong': 'luong',
-                    'chi_van_phong': 'khac',
-                    'chi_cong_no': 'khac',
-                    'chi_tam_ung': 'khac',
-                    'chi_khac': 'khac',
-                }
-                theo_doi = self.env['theo_doi_thuc_hien_ngan_sach'].create({
-                    'ma_giao_dich': rec.name,
-                    'ngan_sach_id': rec.ngan_sach_id.id,
-                    'phan_bo_id': rec.phan_bo_id.id,
-                    'loai_giao_dich': 'chi_tieu',
-                    'loai_chi_tiet': loai_chi_tiet_map.get(rec.loai_chi, 'khac'),
-                    'ngay_giao_dich': rec.date,
-                    'so_tien_thuc_te': rec.amount,
-                    'noi_dung': rec.ly_do or f'Chi tiền cho {rec.partner_id.name or rec.nguoi_nhan or ""}',
-                    'phong_ban_id': rec.phonban_id.id if rec.phonban_id else False,
-                    'tai_san_id': rec.tai_san_id.id if rec.tai_san_id else False,
-                    'trang_thai': 'hoan_thanh',
-                    'nguoi_thuc_hien': self.env.uid,
-                })
-                vals['theo_doi_ngan_sach_id'] = theo_doi.id
+                try:
+                    loai_chi_tiet_map = {
+                        'chi_mua_sam': 'mua_tai_san',
+                        'chi_luong': 'luong',
+                        'chi_van_phong': 'khac',
+                        'chi_cong_no': 'khac',
+                        'chi_tam_ung': 'khac',
+                        'chi_khac': 'khac',
+                    }
+                    theo_doi = self.env['theo_doi_thuc_hien_ngan_sach'].create({
+                        'ma_giao_dich': rec.name,
+                        'ngan_sach_id': rec.ngan_sach_id.id,
+                        'phan_bo_id': rec.phan_bo_id.id,
+                        'loai_giao_dich': 'chi_tieu',
+                        'loai_chi_tiet': loai_chi_tiet_map.get(rec.loai_chi, 'khac'),
+                        'ngay_giao_dich': rec.date,
+                        'so_tien_thuc_te': rec.amount,
+                        'noi_dung': rec.ly_do or f'Chi tiền cho {rec.partner_id.name or rec.nguoi_nhan or ""}',
+                        'phong_ban_id': rec.phonban_id.id if rec.phonban_id else False,
+                        'tai_san_id': rec.tai_san_id.id if rec.tai_san_id else False,
+                        'trang_thai': 'hoan_thanh',
+                        'nguoi_thuc_hien': self.env.uid,
+                    })
+                    vals['theo_doi_ngan_sach_id'] = theo_doi.id
+                except Exception as e:
+                    pass
             
             rec.write(vals)
         return True

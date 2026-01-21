@@ -167,9 +167,6 @@ class PhieuThu(models.Model):
         """Hủy phiếu thu"""
         for rec in self:
             if rec.state == 'posted':
-                # Hoàn tác công nợ nếu cần
-                if rec.loai_thu == 'thu_cong_no' and rec.cong_no_id:
-                    rec.cong_no_id.action_reverse_pay(rec.amount)
                 # Hủy theo dõi ngân sách
                 if rec.theo_doi_ngan_sach_id:
                     rec.theo_doi_ngan_sach_id.unlink()

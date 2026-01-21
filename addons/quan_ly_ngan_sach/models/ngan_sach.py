@@ -94,6 +94,24 @@ class NganSach(models.Model):
             if record.tong_ngan_sach <= 0:
                 raise ValidationError('Tổng ngân sách phải lớn hơn 0!')
     
+    # FIX: THÊM kiểm tra bắt buộc quý/tháng theo loại ngân sách
+    @api.constrains('loai_ngan_sach', 'quy', 'thang')
+    def _check_loai_ngan_sach_fields(self):
+        """
+        Đảm bảo dữ liệu nhất quán:
+        - Nếu loại = 'quy' → bắt buộc chọn quý
+        - Nếu loại = 'thang' → bắt buộc chọn tháng
+        """
+        for record in self:
+            if record.loai_ngan_sach == 'quy' and not record.quy:
+                raise ValidationError(
+                    'Vui lòng chọn quý khi loại ngân sách = "Ngân sách quý"'
+                )
+            elif record.loai_ngan_sach == 'thang' and not record.thang:
+                raise ValidationError(
+                    'Vui lòng chọn tháng khi loại ngân sách = "Ngân sách tháng"'
+                )
+    
     def action_duyet(self):
         """Duyệt ngân sách"""
         self.write({

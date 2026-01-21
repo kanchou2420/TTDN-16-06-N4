@@ -79,6 +79,28 @@ class PhanBoNganSach(models.Model):
             if record.so_tien <= 0:
                 raise ValidationError('Số tiền phân bổ phải lớn hơn 0!')
     
+    # FIX: THÊM kiểm tra tổng phân bổ không vượt quá ngân sách
+    @api.constrains('so_tien', 'ngan_sach_id')
+    def _check_tong_phan_bo_not_exceed_budget(self):
+        """
+        Đảm bảo tổng số tiền phân bổ không vượt quá tổng ngân sách.
+        Quản lý rủi ro: tránh phân bổ quá mức.
+        """
+        for record in self:
+            if record.ngan_sach_id:
+                # Tính tổng phân bổ (bao gồm bản ghi hiện tại)
+                tong_phan_bo = sum(
+                    record.ngan_sach_id.phan_bo_ids.mapped('so_tien')
+                )
+                
+                if tong_phan_bo > record.ngan_sach_id.tong_ngan_sach:
+                    raise ValidationError(
+                        f'❌ VƯỢT NGÂN SÁCH!\n'
+                        f'Tổng phân bổ ({tong_phan_bo:,.0f}) vượt quá '
+                        f'ngân sách ({record.ngan_sach_id.tong_ngan_sach:,.0f})\n'
+                        f'Vui lòng giảm số tiền phân bổ.'
+                    )
+    
     @api.constrains('ngay_bat_dau', 'ngay_ket_thuc')
     def _check_dates(self):
         for record in self:
