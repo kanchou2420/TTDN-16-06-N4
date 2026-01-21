@@ -17,32 +17,46 @@ Dự án này nhằm mục đích quản lý tài sản của một tổ chức,
 * Kiểm kê tài sản
 * Luân chuyển tài sản
 * Thanh lý tài sản
+* Dashboard quản lý ngân sách
+* dự toán chi
+* Ngân sách
+* Phân bổ ngân sách
+* Theo dõi thực hiện
+* Dashboard quản lý thu chi công nợ
+* Công nợ
+* Phiếu chi
+* Phiếu thu
+
 * Quản lý đơn mượn tài sản & cấp phát tài sản
-![Dashboard](./images/overview.png)
-![Tình hình mượn trả](./images/borrowing.png)
-![Loại tài sản](./images/loai-tai-san.png)
-![Tài sản cụ thể](./images/tai-san-cu-the.png)
-![Phân bổ tài sản](./images/phan-bo-tai-san.png)
-![Khấu hao tài sản](./images/khau-hao-tai-san.png)
-![Kiểm kê tài sản](./images/kiem-ke-tai-san.png)
-![Luân chuyển tài sản](./images/luan-chuyen-tai-san.png)
-![Thanh lý tài sản](./images/thanh-ly-tai-san.png)
-![Quản lý mượn tài sản](./images/don-muon-tai-san.png)
-![Quản lý cấp phát tài sản](./images/cap-phat-tai-san.png)
+![Dashboard]()
+![Tình hình mượn trả]()
+![Loại tài sản]()
+![Tài sản cụ thể]()
+![Phân bổ tài sản]()
+![Khấu hao tài sản]()
+![Kiểm kê tài sản]()
+![Luân chuyển tài sản]()
+![Thanh lý tài sản]()
+![Quản lý mượn tài sản]()
+![Quản lý cấp phát tài sản]()
 
 # 2. Cài đặt công cụ, môi trường và các thư viện cần thiết
 
 ## 2.1. Clone project.
 
 ```
-git clone https://github.com/nguyenngocdantruong/TTDN-15-04-N6.git
+git clone https://github.com/kanchou2420/TTDN-16-06-N4
 git checkout 
 ```
 
 ## 2.2. cài đặt các thư viện cần thiết
 
 Người sử dụng thực thi các lệnh sau đề cài đặt các thư viện cần thiết
-
+### Bước 1: Cập nhật danh sách gói hệ thống
+```
+sudo apt-get update
+```
+### Bước 2: Cài đặt các thư viện nền tảng
 ```
 sudo apt-get install libxml2-dev libxslt-dev libldap2-dev libsasl2-dev libssl-dev python3.10-distutils python3.10-dev build-essential libssl-dev libffi-dev zlib1g-dev python3.10-venv libpq-dev
 ```
