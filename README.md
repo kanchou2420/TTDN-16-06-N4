@@ -88,7 +88,11 @@ sudo docker-compose up -d
 ## 4.1. Khởi tạo odoo.conf
 
 Tạo tệp **odoo.conf** có nội dung như sau:
-
+nhập lệnh 
+```
+nano odoo.conf
+```
+điền 
 ```
 [options]
 addons_path = addons
