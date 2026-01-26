@@ -31,6 +31,11 @@
         'views/cong_no_views.xml',
         'views/menu.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'quanly_thuchi_congno/static/src/css/dashboard_common.css',
+        ],
+    },
     'installable': True,
     'application': True,
 }

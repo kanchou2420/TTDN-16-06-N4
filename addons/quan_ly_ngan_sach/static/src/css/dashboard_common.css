@@ -1,0 +1,598 @@
+/* ============================================================
+   UNIFIED DASHBOARD STYLES - Common CSS for all dashboards
+   ============================================================ */
+
+:root {
+    --primary-color: #0066cc;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --info-color: #17a2b8;
+    --secondary-color: #6c757d;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --card-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
+    --card-border-radius: 8px;
+    --card-transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ============================================================
+   DASHBOARD CONTAINER
+   ============================================================ */
+
+.o_dashboard_common,
+.o_budget_dashboard,
+.o_thuchi_dashboard {
+    padding: 20px;
+    background-color: #f5f7fa;
+    min-height: 100vh;
+}
+
+.dashboard-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.dashboard-title {
+    color: var(--dark-color);
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.dashboard-subtitle {
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+/* ============================================================
+   STAT CARDS - UNIFIED STYLE
+   ============================================================ */
+
+.o_dashboard_stat_cards .card,
+.stat-card {
+    border: none;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow);
+    transition: var(--card-transition);
+    height: 100%;
+    min-height: 120px;
+    overflow: hidden;
+}
+
+.o_dashboard_stat_cards .card:hover,
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.o_dashboard_card {
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow);
+    transition: var(--card-transition);
+}
+
+.o_dashboard_card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+/* Card Backgrounds */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+}
+
+.bg-gradient-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+}
+
+.bg-gradient-info {
+    background: linear-gradient(135deg, #17a2b8 0%, #3498db 100%);
+}
+
+.bg-gradient-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+}
+
+/* Card Text Styles */
+.card-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.stat-icon {
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================================
+   TEXT COLORS
+   ============================================================ */
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.text-success {
+    color: var(--success-color) !important;
+}
+
+.text-warning {
+    color: var(--warning-color) !important;
+}
+
+.text-danger {
+    color: var(--danger-color) !important;
+}
+
+.text-info {
+    color: var(--info-color) !important;
+}
+
+.text-secondary {
+    color: var(--secondary-color) !important;
+}
+
+/* ============================================================
+   CHART CONTAINERS
+   ============================================================ */
+
+.chart-container {
+    position: relative;
+    background-color: white;
+    border-radius: var(--card-border-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--card-shadow);
+}
+
+.chart-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--dark-color);
+    border-left: 4px solid var(--primary-color);
+    padding-left: 10px;
+}
+
+/* ============================================================
+   BADGE & LABEL STYLES
+   ============================================================ */
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.badge-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.badge-success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.badge-warning {
+    background-color: var(--warning-color);
+    color: #333;
+}
+
+.badge-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.badge-info {
+    background-color: var(--info-color);
+    color: white;
+}
+
+/* ============================================================
+   TABLE STYLES
+   ============================================================ */
+
+.table {
+    background-color: white;
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    font-weight: 600;
+    color: var(--dark-color);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    border-color: #dee2e6;
+}
+
+/* ============================================================
+   PROGRESS BAR STYLES
+   ============================================================ */
+
+.progress {
+    background-color: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+    transition: width 0.6s ease;
+}
+
+.progress-bar-primary {
+    background: linear-gradient(90deg, #0066cc 0%, #0052a3 100%);
+}
+
+.progress-bar-success {
+    background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+}
+
+.progress-bar-warning {
+    background: linear-gradient(90deg, #ffc107 0%, #fd7e14 100%);
+}
+
+.progress-bar-danger {
+    background: linear-gradient(90deg, #dc3545 0%, #e74c3c 100%);
+}
+
+/* ============================================================
+   BUTTON STYLES
+   ============================================================ */
+
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    padding: 10px 16px;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0052a3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 102, 204, 0.3);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+    color: #333;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* ============================================================
+   ALERT STYLES
+   ============================================================ */
+
+.alert {
+    border: none;
+    border-radius: var(--card-border-radius);
+    border-left: 4px solid;
+}
+
+.alert-primary {
+    background-color: #e7f3ff;
+    border-left-color: var(--primary-color);
+    color: #0052a3;
+}
+
+.alert-success {
+    background-color: #e8f5e9;
+    border-left-color: var(--success-color);
+    color: #1b5e20;
+}
+
+.alert-warning {
+    background-color: #fff8e1;
+    border-left-color: var(--warning-color);
+    color: #f57f17;
+}
+
+.alert-danger {
+    background-color: #ffebee;
+    border-left-color: var(--danger-color);
+    color: #b71c1c;
+}
+
+.alert-info {
+    background-color: #e0f7fa;
+    border-left-color: var(--info-color);
+    color: #006064;
+}
+
+/* ============================================================
+   FORM & INPUT STYLES
+   ============================================================ */
+
+.form-control,
+.form-select {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 8px;
+}
+
+/* ============================================================
+   TIMELINE STYLES
+   ============================================================ */
+
+.timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    background-color: #e9ecef;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 30px;
+    width: 50%;
+}
+
+.timeline-item::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.timeline-item.left {
+    float: left;
+    clear: both;
+    padding-right: 30px;
+}
+
+.timeline-item.right {
+    float: right;
+    clear: both;
+    padding-left: 30px;
+}
+
+.timeline-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    font-weight: bold;
+    box-shadow: var(--card-shadow);
+}
+
+.timeline-item.left .timeline-badge {
+    right: -20px;
+}
+
+.timeline-item.right .timeline-badge {
+    left: -20px;
+}
+
+.timeline-panel {
+    padding: 15px;
+    border-radius: var(--card-border-radius);
+    position: relative;
+    background-color: white;
+    box-shadow: var(--card-shadow);
+}
+
+/* ============================================================
+   STAT ROW STYLES
+   ============================================================ */
+
+.o_dashboard_stats {
+    margin-bottom: 30px;
+}
+
+.o_dashboard_stats .col-lg-6 {
+    margin-bottom: 20px;
+}
+
+/* ============================================================
+   RESPONSIVE DESIGN
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+    
+    .timeline::before {
+        left: 30px;
+    }
+    
+    .timeline-item,
+    .timeline-item.left,
+    .timeline-item.right {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 0;
+    }
+    
+    .timeline-item.left .timeline-badge,
+    .timeline-item.right .timeline-badge {
+        left: 10px !important;
+    }
+    
+    .o_dashboard_stat_cards .card {
+        margin-bottom: 15px;
+    }
+}
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+.opacity-50 {
+    opacity: 0.5;
+}
+
+.opacity-75 {
+    opacity: 0.75;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.mt-16 {
+    margin-top: 4rem;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.mr-2 {
+    margin-right: 0.5rem;
+}
+
+.ml-1 {
+    margin-left: 0.25rem;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.align-items-center {
+    align-items: center;
+}

@@ -48,6 +48,7 @@
         'web.assets_backend': [
             'https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js',
             'quan_ly_ngan_sach/static/src/css/dashboard.css',
+            'quan_ly_ngan_sach/static/src/css/dashboard_common.css',
             'quan_ly_ngan_sach/static/src/js/budget_dashboard.js',
         ],
     },

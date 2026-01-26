@@ -49,6 +49,7 @@
             'https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js',
             'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js',
             'quan_ly_tai_san/static/src/css/dashboard.css',
+            'quan_ly_tai_san/static/src/css/dashboard_common.css',
             'quan_ly_tai_san/static/src/js/dashboard_overview.js',
             'quan_ly_tai_san/static/src/js/dashboard_borrowing.js',
         ],

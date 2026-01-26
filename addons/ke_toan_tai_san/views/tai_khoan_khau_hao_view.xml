@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Cấu hình Tài Khoản Khấu Hao List View -->
+        <record id="view_tai_khoan_khau_hao_tree" model="ir.ui.view">
+            <field name="name">tai_khoan_khau_hao.tree</field>
+            <field name="model">tai_khoan_khau_hao</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách cấu hình">
+                    <field name="name"/>
+                    <field name="loai_tai_san_id"/>
+                    <field name="journal_id"/>
+                    <field name="thoi_gian_su_dung"/>
+                    <field name="pp_khau_hao_mac_dinh"/>
+                    <field name="active" widget="boolean"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Cấu hình Tài Khoản Khấu Hao Form View -->
+        <record id="view_tai_khoan_khau_hao_form" model="ir.ui.view">
+            <field name="name">tai_khoan_khau_hao.form</field>
+            <field name="model">tai_khoan_khau_hao</field>
+            <field name="arch" type="xml">
+                <form string="Cấu hình tài khoản khấu hao">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" required="1"/></h1>
+                        </div>
+
+                        <group string="Thông tin chung">
+                            <field name="loai_tai_san_id" required="1"/>
+                            <field name="active"/>
+                        </group>
+
+                        <group string="Cấu hình sổ cái">
+                            <field name="journal_id" required="1"/>
+                            <field name="account_asset_id" required="1" domain="[('deprecated', '=', False)]"/>
+                            <field name="account_accumulated_depreciation_id" required="1" domain="[('deprecated', '=', False)]"/>
+                            <field name="account_depreciation_expense_id" required="1" domain="[('deprecated', '=', False)]"/>
+                        </group>
+
+                        <group string="Cấu hình khấu hao">
+                            <field name="thoi_gian_su_dung" required="1"/>
+                            <field name="ty_le_khau_hao"/>
+                            <field name="pp_khau_hao_mac_dinh" required="1"/>
+                        </group>
+
+                        <group string="Ghi chú">
+                            <field name="ghi_chu" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Cấu hình Tài Khoản Action -->
+        <record id="action_tai_khoan_khau_hao" model="ir.actions.act_window">
+            <field name="name">Cấu hình Tài Khoản Khấu Hao</field>
+            <field name="res_model">tai_khoan_khau_hao</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help">Cấu hình tài khoản kế toán cho khấu hao theo loại tài sản</field>
+        </record>
+    </data>
+</odoo>

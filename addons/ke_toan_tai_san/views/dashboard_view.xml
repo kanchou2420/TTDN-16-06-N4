@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Dashboard Form View -->
+        <record id="view_ke_toan_dashboard_form" model="ir.ui.view">
+            <field name="name">ke_toan.dashboard.form</field>
+            <field name="model">ke_toan.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard Kế Toán Tài Sản">
+                    <group>
+                        <group>
+                            <field name="tong_tai_san"/>
+                            <field name="tong_gia_tri_tai_san" widget="monetary"/>
+                            <field name="tong_khau_hao" widget="monetary"/>
+                            <field name="gia_tri_con_lai" widget="monetary"/>
+                        </group>
+                        <group>
+                            <field name="chi_phi_khau_hao_thang_nay" widget="monetary"/>
+                            <field name="chi_phi_khau_hao_nam_nay" widget="monetary"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Dashboard Action -->
+        <record id="action_ke_toan_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard Kế Toán Tài Sản</field>
+            <field name="res_model">ke_toan.dashboard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_ke_toan_dashboard_form"/>
+            <field name="target">main</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Menu Items -->
+        <menuitem id="menu_ke_toan_root" name="Kế Toán Tài Sản" 
+            parent="account.menu_finance" sequence="10"/>
+        
+        <menuitem id="menu_ke_toan_dashboard" name="Dashboard" 
+            parent="menu_ke_toan_root" action="action_ke_toan_dashboard" sequence="1"/>
+        
+        <menuitem id="menu_khau_hao" name="Khấu Hao Tài Sản" 
+            parent="menu_ke_toan_root" action="action_khau_hao" sequence="2"/>
+        
+        <menuitem id="menu_so_tai_san" name="Sổ Tài Sản" 
+            parent="menu_ke_toan_root" action="action_so_tai_san" sequence="3"/>
+        
+        <menuitem id="menu_setup" name="Cấu Hình" parent="menu_ke_toan_root" sequence="10"/>
+        
+        <menuitem id="menu_tai_khoan_config" name="Cấu Hình Tài Khoản" 
+            parent="menu_setup" action="action_tai_khoan_khau_hao" sequence="1"/>
+    </data>
+</odoo>
