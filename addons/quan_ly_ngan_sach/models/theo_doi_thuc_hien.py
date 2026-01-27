@@ -68,8 +68,13 @@ class TheoDoiThucHienNganSach(models.Model):
         ('hoan_thanh', 'Hoàn thành'),
     ], string='Trạng thái', default='nhap', required=True)
     
-    nguoi_thuc_hien = fields.Many2one('res.users', string='Người thực hiện', default=lambda self: self.env.user)
-    nguoi_duyet = fields.Many2one('res.users', string='Người duyệt')
+    # Liên kết với nhân sự
+    nguoi_thuc_hien_id = fields.Many2one('nhan_vien', string='Nhân sự thực hiện',
+                                          help='Nhân sự thực hiện giao dịch này')
+    nguoi_thuc_hien = fields.Many2one('res.users', string='User thực hiện', default=lambda self: self.env.user)
+    nguoi_duyet_id = fields.Many2one('nhan_vien', string='Nhân sự duyệt',
+                                      help='Nhân sự duyệt giao dịch này')
+    nguoi_duyet = fields.Many2one('res.users', string='User duyệt')
     ngay_tao = fields.Date('Ngày tạo', default=fields.Date.today)
     ngay_duyet = fields.Date('Ngày duyệt')
     

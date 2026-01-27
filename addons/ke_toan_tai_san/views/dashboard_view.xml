@@ -6,26 +6,53 @@
             <field name="name">ke_toan.dashboard.form</field>
             <field name="model">ke_toan.dashboard</field>
             <field name="arch" type="xml">
-                <form string="Dashboard Kế Toán Tài Sản">
-                    <group>
-                        <group>
-                            <field name="tong_tai_san"/>
-                            <field name="tong_gia_tri_tai_san" widget="monetary"/>
-                            <field name="tong_khau_hao" widget="monetary"/>
-                            <field name="gia_tri_con_lai" widget="monetary"/>
-                        </group>
-                        <group>
-                            <field name="chi_phi_khau_hao_thang_nay" widget="monetary"/>
-                            <field name="chi_phi_khau_hao_nam_nay" widget="monetary"/>
-                        </group>
-                    </group>
+                <form string="Dashboard Kế Toán Tài Sản &amp; Tài Chính">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>📊 Dashboard Tổng Hợp Tài Chính</h1>
+                        </div>
+                        <notebook>
+                            <page string="📦 Tài Sản &amp; Khấu Hao" name="tai_san">
+                                <group>
+                                    <group string="Thống Kê Tài Sản">
+                                        <field name="tong_tai_san"/>
+                                        <field name="tong_gia_tri_tai_san" widget="monetary"/>
+                                        <field name="tong_khau_hao" widget="monetary"/>
+                                        <field name="gia_tri_con_lai" widget="monetary"/>
+                                    </group>
+                                    <group string="Chi Phí Khấu Hao">
+                                        <field name="chi_phi_khau_hao_thang_nay" widget="monetary"/>
+                                        <field name="chi_phi_khau_hao_nam_nay" widget="monetary"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="💰 Thu Chi" name="thu_chi">
+                                <group>
+                                    <group string="Thu Chi Tháng Này">
+                                        <field name="tong_thu_thang" widget="monetary"/>
+                                        <field name="tong_chi_thang" widget="monetary"/>
+                                        <field name="can_doi_thang" widget="monetary"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="📋 Ngân Sách" name="ngan_sach">
+                                <group>
+                                    <group string="Tình Hình Ngân Sách">
+                                        <field name="tong_ngan_sach" widget="monetary"/>
+                                        <field name="ngan_sach_da_chi" widget="monetary"/>
+                                        <field name="ngan_sach_con_lai" widget="monetary"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
                 </form>
             </field>
         </record>
 
         <!-- Dashboard Action -->
         <record id="action_ke_toan_dashboard" model="ir.actions.act_window">
-            <field name="name">Dashboard Kế Toán Tài Sản</field>
+            <field name="name">📊 Dashboard Tài Chính</field>
             <field name="res_model">ke_toan.dashboard</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_ke_toan_dashboard_form"/>

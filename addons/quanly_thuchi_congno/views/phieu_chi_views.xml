@@ -71,7 +71,9 @@
                             <field name="ngay_xac_nhan" readonly="1"/>
                         </group>
                         <group>
-                            <field name="nguoi_duyet_id" readonly="1"/>
+                            <field name="nguoi_duyet_nhansu_id" domain="[('is_lanh_dao', '=', True)]"
+                                   attrs="{'required': [('state', 'in', ['confirmed', 'approved', 'posted'])]}"/>
+                            <field name="nguoi_duyet_id" readonly="1" invisible="1"/>
                             <field name="ngay_duyet" readonly="1"/>
                         </group>
                     </group>

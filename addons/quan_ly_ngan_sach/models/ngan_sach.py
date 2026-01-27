@@ -60,9 +60,16 @@ class NganSach(models.Model):
         ('huy', 'Hủy'),
     ], string='Trạng thái', default='nhap', required=True, tracking=True)
     
-    nguoi_lap = fields.Many2one('res.users', string='Người lập', default=lambda self: self.env.user)
+    # Liên kết với nhân sự
+    nguoi_lap_id = fields.Many2one('nhan_vien', string='Người lập')
+    nguoi_lap = fields.Many2one('res.users', string='User lập', default=lambda self: self.env.user)
     ngay_lap = fields.Date('Ngày lập', default=fields.Date.today)
-    nguoi_duyet = fields.Many2one('res.users', string='Người duyệt')
+    
+    # Người duyệt ngân sách - CHỈ CHO PHÉP CHỦ TỊCH HOẶC GIÁM ĐỐC
+    nguoi_duyet_id = fields.Many2one('nhan_vien', string='Người duyệt',
+                                      domain="[('is_lanh_dao', '=', True)]",
+                                      help='Chỉ Chủ tịch hoặc Giám đốc mới được duyệt ngân sách')
+    nguoi_duyet = fields.Many2one('res.users', string='User duyệt')
     ngay_duyet = fields.Date('Ngày duyệt')
     
     ghi_chu = fields.Text('Ghi chú')
@@ -113,7 +120,13 @@ class NganSach(models.Model):
                 )
     
     def action_duyet(self):
-        """Duyệt ngân sách"""
+        """Duyệt ngân sách - Chỉ Chủ tịch hoặc Giám đốc mới được duyệt"""
+        for record in self:
+            if not record.nguoi_duyet_id:
+                raise ValidationError('Vui lòng chọn người duyệt ngân sách!')
+            if not record.nguoi_duyet_id.is_lanh_dao:
+                raise ValidationError('Người duyệt phải là Chủ tịch hoặc Giám đốc!')
+        
         self.write({
             'trang_thai': 'duyet',
             'nguoi_duyet': self.env.user.id,

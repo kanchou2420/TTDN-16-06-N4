@@ -82,7 +82,11 @@ class PhieuChi(models.Model):
     # Người duyệt
     nguoi_xac_nhan_id = fields.Many2one('res.users', string='Người xác nhận', ondelete='set null')
     ngay_xac_nhan = fields.Datetime(string='Ngày xác nhận')
-    nguoi_duyet_id = fields.Many2one('res.users', string='Người duyệt', ondelete='set null')
+    nguoi_duyet_id = fields.Many2one('res.users', string='User duyệt', ondelete='set null')
+    nguoi_duyet_nhansu_id = fields.Many2one('nhan_vien', string='Người duyệt',
+                                             domain="[('is_lanh_dao', '=', True)]",
+                                             ondelete='set null',
+                                             help='Chỉ Chủ tịch hoặc Giám đốc mới được duyệt phiếu chi')
     ngay_duyet = fields.Datetime(string='Ngày duyệt')
     
     # Theo dõi thực hiện ngân sách tự động tạo

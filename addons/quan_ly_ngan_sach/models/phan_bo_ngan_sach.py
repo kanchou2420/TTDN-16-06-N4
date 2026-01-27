@@ -48,8 +48,13 @@ class PhanBoNganSach(models.Model):
     muc_dich = fields.Text('Mục đích sử dụng')
     ghi_chu = fields.Text('Ghi chú')
     
-    nguoi_phu_trach = fields.Many2one('res.users', string='Người phụ trách')
-    nguoi_tao = fields.Many2one('res.users', string='Người tạo', default=lambda self: self.env.user)
+    # Liên kết với nhân sự
+    nguoi_phu_trach_id = fields.Many2one('nhan_vien', string='Nhân sự phụ trách',
+                                          help='Nhân sự phụ trách phân bổ ngân sách này')
+    nguoi_phu_trach = fields.Many2one('res.users', string='User phụ trách')
+    nguoi_tao_id = fields.Many2one('nhan_vien', string='Nhân sự tạo',
+                                    help='Nhân sự tạo bản ghi phân bổ')
+    nguoi_tao = fields.Many2one('res.users', string='User tạo', default=lambda self: self.env.user)
     ngay_phan_bo = fields.Date('Ngày phân bổ', default=fields.Date.today)
     
     # Relations

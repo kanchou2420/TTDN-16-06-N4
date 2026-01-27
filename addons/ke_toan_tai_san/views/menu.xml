@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Menu Items -->
-        <menuitem id="menu_ke_toan_root" name="Kế Toán Tài Sản" 
-            parent="account.menu_finance" sequence="10"/>
+        <!-- Menu gốc riêng cho kế toán tài sản - MODULE ĐỘC LẬP -->
+        <menuitem id="menu_ke_toan_tai_san_root" name="Kế Toán Tài Sản" 
+            sequence="60"/>
         
         <menuitem id="menu_ke_toan_dashboard" name="Dashboard" 
-            parent="menu_ke_toan_root" action="action_ke_toan_dashboard" sequence="1"/>
+            parent="menu_ke_toan_tai_san_root" action="action_ke_toan_dashboard" sequence="1"/>
         
         <menuitem id="menu_khau_hao" name="Khấu Hao Tài Sản" 
-            parent="menu_ke_toan_root" action="action_khau_hao" sequence="2"/>
+            parent="menu_ke_toan_tai_san_root" action="action_khau_hao" sequence="2"/>
+        
+        <menuitem id="menu_but_toan" name="Bút Toán Khấu Hao" 
+            parent="menu_ke_toan_tai_san_root" action="action_but_toan_khau_hao" sequence="3"/>
         
         <menuitem id="menu_so_tai_san" name="Sổ Tài Sản" 
-            parent="menu_ke_toan_root" action="action_so_tai_san" sequence="3"/>
+            parent="menu_ke_toan_tai_san_root" action="action_so_tai_san" sequence="4"/>
         
-        <menuitem id="menu_setup" name="Cấu Hình" parent="menu_ke_toan_root" sequence="10"/>
+        <menuitem id="menu_ai_forecast" name="🤖 Dự Báo AI" 
+            parent="menu_ke_toan_tai_san_root" action="action_ai_forecast" sequence="5"/>
         
-        <menuitem id="menu_tai_khoan_config" name="Cấu Hình Tài Khoản" 
+        <menuitem id="menu_setup" name="Cấu Hình" parent="menu_ke_toan_tai_san_root" sequence="10"/>
+        
+        <menuitem id="menu_tai_khoan_config" name="Cấu Hình Tài Khoản Khấu Hao" 
             parent="menu_setup" action="action_tai_khoan_khau_hao" sequence="1"/>
     </data>
 </odoo>

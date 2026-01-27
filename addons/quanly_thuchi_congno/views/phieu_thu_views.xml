@@ -58,7 +58,8 @@
                     </group>
                     <group string="Phê duyệt" attrs="{'invisible': [('state', '=', 'draft')]}">
                         <group>
-                            <field name="nguoi_duyet_id" readonly="1"/>
+                            <field name="nguoi_duyet_nhansu_id" domain="[('is_lanh_dao', '=', True)]"/>
+                            <field name="nguoi_duyet_id" readonly="1" invisible="1"/>
                             <field name="ngay_duyet" readonly="1"/>
                         </group>
                     </group>

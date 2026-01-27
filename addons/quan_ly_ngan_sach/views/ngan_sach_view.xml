@@ -48,9 +48,12 @@
                             <field name="con_lai" widget="monetary" options="{'currency_field': 'don_vi_tien_te'}"/>
                         </group>
                         <group string="Thông Tin Duyệt">
-                            <field name="nguoi_lap"/>
+                            <field name="nguoi_lap_id"/>
+                            <field name="nguoi_lap" invisible="1"/>
                             <field name="ngay_lap"/>
-                            <field name="nguoi_duyet"/>
+                            <field name="nguoi_duyet_id" domain="[('is_lanh_dao', '=', True)]" 
+                                   attrs="{'required': [('trang_thai', '!=', 'nhap')]}"/>
+                            <field name="nguoi_duyet" invisible="1"/>
                             <field name="ngay_duyet"/>
                         </group>
                     </group>

@@ -6,7 +6,7 @@
             name="QLNS"
             sequence="0"/>
           
-        <menuitem name="Quản lý nhân viên" 
+        <menuitem name="Quản lý nhân sự" 
             id="menu_nhan_vien" 
             parent="menu_root" 
             sequence="1"

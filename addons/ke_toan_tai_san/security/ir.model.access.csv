@@ -1,10 +1,15 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_khau_hao_user,khau_hao_tai_san user,model_khau_hao_tai_san,base.group_user,1,1,1,0
-access_khau_hao_manager,khau_hao_tai_san manager,model_khau_hao_tai_san,account.group_account_manager,1,1,1,1
+access_khau_hao_manager,khau_hao_tai_san manager,model_khau_hao_tai_san,base.group_system,1,1,1,1
+access_but_toan_user,but_toan_khau_hao user,model_but_toan_khau_hao,base.group_user,1,1,1,0
+access_but_toan_manager,but_toan_khau_hao manager,model_but_toan_khau_hao,base.group_system,1,1,1,1
 access_so_tai_san_user,so_tai_san user,model_so_tai_san,base.group_user,1,1,1,0
-access_so_tai_san_manager,so_tai_san manager,model_so_tai_san,account.group_account_manager,1,1,1,1
+access_so_tai_san_manager,so_tai_san manager,model_so_tai_san,base.group_system,1,1,1,1
 access_so_tai_san_line_user,so_tai_san_line user,model_so_tai_san_line,base.group_user,1,0,0,0
-access_so_tai_san_line_manager,so_tai_san_line manager,model_so_tai_san_line,account.group_account_manager,1,1,1,1
-access_tai_khoan_khau_hao_manager,tai_khoan_khau_hao manager,model_tai_khoan_khau_hao,account.group_account_manager,1,1,1,1
+access_so_tai_san_line_manager,so_tai_san_line manager,model_so_tai_san_line,base.group_system,1,1,1,1
+access_tai_khoan_khau_hao_user,tai_khoan_khau_hao user,model_tai_khoan_khau_hao,base.group_user,1,0,0,0
+access_tai_khoan_khau_hao_manager,tai_khoan_khau_hao manager,model_tai_khoan_khau_hao,base.group_system,1,1,1,1
 access_ke_toan_dashboard_user,ke_toan_dashboard user,model_ke_toan_dashboard,base.group_user,1,0,0,0
-access_ke_toan_dashboard_manager,ke_toan_dashboard manager,model_ke_toan_dashboard,account.group_account_manager,1,1,0,0
+access_ke_toan_dashboard_manager,ke_toan_dashboard manager,model_ke_toan_dashboard,base.group_system,1,1,0,0
+access_ai_forecast_user,ai_forecast user,model_ai_forecast,base.group_user,1,1,1,0
+access_ai_forecast_manager,ai_forecast manager,model_ai_forecast,base.group_system,1,1,1,1

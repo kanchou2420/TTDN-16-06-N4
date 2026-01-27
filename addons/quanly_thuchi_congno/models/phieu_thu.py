@@ -74,7 +74,11 @@ class PhieuThu(models.Model):
     ], string='Trạng thái', default='draft', required=True, tracking=True)
     
     # Người duyệt
-    nguoi_duyet_id = fields.Many2one('res.users', string='Người duyệt', ondelete='set null')
+    nguoi_duyet_id = fields.Many2one('res.users', string='User duyệt', ondelete='set null')
+    nguoi_duyet_nhansu_id = fields.Many2one('nhan_vien', string='Người duyệt',
+                                             domain="[('is_lanh_dao', '=', True)]",
+                                             ondelete='set null',
+                                             help='Chỉ lãnh đạo mới được duyệt phiếu thu')
     ngay_duyet = fields.Datetime(string='Ngày duyệt')
     
     # Theo dõi thực hiện ngân sách tự động tạo

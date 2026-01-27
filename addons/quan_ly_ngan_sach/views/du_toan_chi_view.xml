@@ -55,9 +55,11 @@
                             <field name="file_dinh_kem_filename" invisible="1"/>
                         </group>
                         <group string="Thông tin">
-                            <field name="nguoi_de_xuat"/>
+                            <field name="nguoi_de_xuat_id"/>
+                            <field name="nguoi_de_xuat" invisible="1"/>
                             <field name="ngay_tao"/>
-                            <field name="nguoi_duyet"/>
+                            <field name="nguoi_duyet_id" domain="[('is_lanh_dao', '=', True)]"/>
+                            <field name="nguoi_duyet" invisible="1"/>
                             <field name="ngay_duyet"/>
                         </group>
                     </group>

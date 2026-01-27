@@ -84,9 +84,16 @@ class DuToanChi(models.Model):
     ly_do_tu_choi = fields.Text('Lý do từ chối')
     ghi_chu = fields.Text('Ghi chú')
     
-    nguoi_de_xuat = fields.Many2one('res.users', string='Người đề xuất', default=lambda self: self.env.user)
+    # Liên kết với nhân sự
+    nguoi_de_xuat_id = fields.Many2one('nhan_vien', string='Nhân sự đề xuất',
+                                        help='Nhân sự đề xuất dự toán chi')
+    nguoi_de_xuat = fields.Many2one('res.users', string='User đề xuất', default=lambda self: self.env.user)
     ngay_tao = fields.Date('Ngày tạo', default=fields.Date.today)
-    nguoi_duyet = fields.Many2one('res.users', string='Người duyệt')
+    
+    nguoi_duyet_id = fields.Many2one('nhan_vien', string='Nhân sự duyệt',
+                                      domain="[('is_lanh_dao', '=', True)]",
+                                      help='Chỉ lãnh đạo mới được duyệt dự toán')
+    nguoi_duyet = fields.Many2one('res.users', string='User duyệt')
     ngay_duyet = fields.Date('Ngày duyệt')
     
     # File đính kèm

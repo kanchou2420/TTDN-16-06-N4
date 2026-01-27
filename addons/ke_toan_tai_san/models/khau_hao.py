@@ -7,9 +7,10 @@ from datetime import datetime, timedelta
 
 class KhauHaoTaiSan(models.Model):
     _name = 'khau_hao_tai_san'
-    _description = 'Khấu hao tài sản - Ghi nhận vào sổ cái'
+    _description = 'Khấu hao tài sản - Ghi nhận nội bộ'
     _rec_name = 'ma_khau_hao'
     _order = 'ngay_khau_hao desc'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     
     ma_khau_hao = fields.Char('Mã khấu hao', readonly=True)
     tai_san_id = fields.Many2one('tai_san', 'Tài sản', required=True, ondelete='cascade')
@@ -26,13 +27,13 @@ class KhauHaoTaiSan(models.Model):
         ('units', 'Đơn vị sản xuất'),
     ], string='Phương pháp khấu hao', required=True, default='straight-line')
     
-    # GL Integration
-    journal_entry_id = fields.Many2one('account.move', 'Bút toán sổ cái', readonly=True)
+    # Bút toán nội bộ (không dùng account.move)
+    but_toan_id = fields.Many2one('but_toan_khau_hao', 'Bút toán khấu hao', readonly=True)
     trang_thai = fields.Selection([
         ('draft', 'Nháp'),
         ('posted', 'Ghi sổ'),
         ('cancelled', 'Hủy'),
-    ], string='Trạng thái', default='draft', readonly=True)
+    ], string='Trạng thái', default='draft', readonly=True, tracking=True)
     
     ghi_chu = fields.Text('Ghi chú')
     
@@ -50,9 +51,9 @@ class KhauHaoTaiSan(models.Model):
         return super().create(vals)
     
     def action_post_journal(self):
-        """Ghi sổ cái kế toán"""
+        """Ghi sổ khấu hao nội bộ"""
         for record in self:
-            if record.journal_entry_id:
+            if record.but_toan_id:
                 raise ValidationError("Bút toán đã được ghi sổ!")
             
             tai_san = record.tai_san_id
@@ -63,40 +64,32 @@ class KhauHaoTaiSan(models.Model):
             
             if not tai_khoan_config:
                 raise ValidationError(
-                    f"Chưa cấu hình tài khoản khấu hao cho loại tài sản '{tai_san.danh_muc_ts_id.name}'"
+                    f"Chưa cấu hình tài khoản khấu hao cho loại tài sản '{tai_san.danh_muc_ts_id.ten_danh_muc_ts}'"
                 )
             
-            # Tạo bút toán
-            move_vals = {
-                'date': record.ngay_khau_hao,
-                'ref': record.ma_khau_hao,
-                'journal_id': tai_khoan_config.journal_id.id,
-                'line_ids': [
-                    (0, 0, {
-                        'account_id': tai_khoan_config.account_depreciation_expense_id.id,
-                        'debit': record.so_tien_khau_hao,
-                        'credit': 0,
-                        'name': f"Khấu hao {tai_san.ten_tai_san} ({record.ma_khau_hao})",
-                    }),
-                    (0, 0, {
-                        'account_id': tai_khoan_config.account_accumulated_depreciation_id.id,
-                        'debit': 0,
-                        'credit': record.so_tien_khau_hao,
-                        'name': f"Khấu hao tích lũy {tai_san.ten_tai_san}",
-                    }),
-                ],
-            }
+            # Tạo bút toán khấu hao nội bộ
+            but_toan = self.env['but_toan_khau_hao'].create({
+                'ma_but_toan': f"BT-{record.ma_khau_hao}",
+                'ngay_ghi_so': record.ngay_khau_hao,
+                'khau_hao_id': record.id,
+                'tai_san_id': tai_san.id,
+                'tai_khoan_no': tai_khoan_config.ma_tk_chi_phi,
+                'tai_khoan_co': tai_khoan_config.ma_tk_khau_hao_luy_ke,
+                'so_tien': record.so_tien_khau_hao,
+                'dien_giai': f"Khấu hao {tai_san.ten_tai_san} ({record.ma_khau_hao})",
+                'trang_thai': 'posted',
+            })
             
-            move = self.env['account.move'].create(move_vals)
-            move.action_post()
-            
-            record.journal_entry_id = move.id
+            record.but_toan_id = but_toan.id
             record.trang_thai = 'posted'
+            
+            # Cập nhật giá trị hiện tại của tài sản
+            if hasattr(tai_san, 'gia_tri_hien_tai'):
+                tai_san.gia_tri_hien_tai = record.gia_tri_sau_khau_hao
     
     def action_cancel(self):
         """Hủy khấu hao"""
         for record in self:
-            if record.journal_entry_id:
-                record.journal_entry_id.button_cancel()
-                record.journal_entry_id.unlink()
+            if record.but_toan_id:
+                record.but_toan_id.trang_thai = 'cancelled'
             record.trang_thai = 'cancelled'

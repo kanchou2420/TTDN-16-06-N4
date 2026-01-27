@@ -9,7 +9,9 @@
                 <tree string="Danh sách cấu hình">
                     <field name="name"/>
                     <field name="loai_tai_san_id"/>
-                    <field name="journal_id"/>
+                    <field name="ma_tk_tai_san"/>
+                    <field name="ma_tk_chi_phi"/>
+                    <field name="ma_tk_khau_hao_luy_ke"/>
                     <field name="thoi_gian_su_dung"/>
                     <field name="pp_khau_hao_mac_dinh"/>
                     <field name="active" widget="boolean"/>
@@ -33,11 +35,10 @@
                             <field name="active"/>
                         </group>
 
-                        <group string="Cấu hình sổ cái">
-                            <field name="journal_id" required="1"/>
-                            <field name="account_asset_id" required="1" domain="[('deprecated', '=', False)]"/>
-                            <field name="account_accumulated_depreciation_id" required="1" domain="[('deprecated', '=', False)]"/>
-                            <field name="account_depreciation_expense_id" required="1" domain="[('deprecated', '=', False)]"/>
+                        <group string="Mã tài khoản kế toán">
+                            <field name="ma_tk_tai_san" required="1" placeholder="VD: 211"/>
+                            <field name="ma_tk_khau_hao_luy_ke" required="1" placeholder="VD: 2141"/>
+                            <field name="ma_tk_chi_phi" required="1" placeholder="VD: 6274"/>
                         </group>
 
                         <group string="Cấu hình khấu hao">
@@ -59,7 +60,7 @@
             <field name="name">Cấu hình Tài Khoản Khấu Hao</field>
             <field name="res_model">tai_khoan_khau_hao</field>
             <field name="view_mode">tree,form</field>
-            <field name="help">Cấu hình tài khoản kế toán cho khấu hao theo loại tài sản</field>
+            <field name="help">Cấu hình mã tài khoản kế toán cho khấu hao theo loại tài sản</field>
         </record>
     </data>
 </odoo>

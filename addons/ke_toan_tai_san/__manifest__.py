@@ -1,46 +1,50 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Kế Toán Tài Sản & Khấu Hao",
+    'name': "Kế Toán Tài Sản & Dự Báo AI",
 
     'summary': """
-        Quản lý khấu hao tài sản, tích hợp sổ cái kế toán và dự báo AI
+        Quản lý khấu hao tài sản, tích hợp ngân sách và dự báo AI
     """,
 
     'description': """
-        Module Kế Toán Tài Sản & Khấu Hao
-        ==================================
+        Module Kế Toán Tài Sản & Dự Báo AI
+        ======================================
+        
+        MODULE ĐỘC LẬP - KHÔNG CẦN CÀI ĐẶT MODULE ACCOUNT (Lên hóa đơn)
         
         Chức năng chính:
         - Tính toán và ghi nhận khấu hao tự động hàng tháng
-        - Tích hợp với sổ cái kế toán (Journal Entries)
+        - Quản lý bút toán khấu hao nội bộ
         - Báo cáo chi tiết khấu hao theo tài sản, phòng ban
         - Bảng cân đối tài sản (Asset Register)
-        - Phân tích giá trị tài sản
-        - Dự báo AI cho chi phí bảo trì
+        - Dự BÁO AI thu chi, chi phí khấu hao
+        - Phân tích xu hướng tài chính
         
         Tích hợp với:
         - Module Quản Lý Tài Sản (lấy dữ liệu tài sản)
-        - Module Quản Lý Ngân Sách (theo dõi chi phí)
-        - Module Quản Lý Thu Chi (ghi nhận giao dịch)
+        - Module Quản Lý Ngân Sách (theo dõi ngân sách)
+        - Module Thu Chi Công Nợ (dữ liệu thu chi thực tế)
     """,
 
     'author': "TTDN-16-06-N4",
     'website': "http://www.yourcompany.com",
 
     'category': 'Accounting',
-    'version': '1.0',
+    'version': '2.0',
     'license': 'LGPL-3',
 
-    # Dependencies
-    'depends': ['base', 'web', 'mail', 'account', 'quan_ly_tai_san'],
+    # Dependencies - TÍCH HỢP VỚI CÁC MODULE KHÁC
+    'depends': ['base', 'web', 'mail', 'quan_ly_tai_san', 'quan_ly_ngan_sach', 'quanly_thuchi_congno'],
 
     # Data files
     'data': [
         'security/ir.model.access.csv',
         'data/cron_jobs.xml',
         'views/khau_hao_view.xml',
+        'views/but_toan_khau_hao_view.xml',
         'views/so_tai_san_view.xml',
         'views/tai_khoan_khau_hao_view.xml',
+        'views/ai_forecast_view.xml',
         'views/dashboard_view.xml',
         'views/menu.xml',
     ],

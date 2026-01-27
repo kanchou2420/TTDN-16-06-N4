@@ -60,11 +60,13 @@
                     
                     <group>
                         <group string="Thông Tin">
-                            <field name="nguoi_thuc_hien"/>
+                            <field name="nguoi_thuc_hien_id"/>
+                            <field name="nguoi_thuc_hien" invisible="1"/>
                             <field name="ngay_tao"/>
                         </group>
                         <group>
-                            <field name="nguoi_duyet"/>
+                            <field name="nguoi_duyet_id"/>
+                            <field name="nguoi_duyet" invisible="1"/>
                             <field name="ngay_duyet"/>
                         </group>
                     </group>

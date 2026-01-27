@@ -34,10 +34,12 @@
                         <group>
                             <field name="ngay_bat_dau"/>
                             <field name="ngay_ket_thuc"/>
-                            <field name="nguoi_phu_trach"/>
+                            <field name="nguoi_phu_trach_id"/>
+                            <field name="nguoi_phu_trach" invisible="1"/>
                         </group>
                         <group>
-                            <field name="nguoi_tao"/>
+                            <field name="nguoi_tao_id"/>
+                            <field name="nguoi_tao" invisible="1"/>
                             <field name="ngay_phan_bo"/>
                         </group>
                     </group>

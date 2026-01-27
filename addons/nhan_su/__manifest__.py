@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "nhan_su",
+    'name': "Quản Lý Nhân Sự",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Quản lý thông tin nhân sự, chức vụ và phòng ban""",
 
     'description': """
-        Long description of module's purpose
+        Module Quản Lý Nhân Sự
+        =======================
+        
+        Chức năng chính:
+        - Quản lý thông tin nhân sự (chức vụ bắt buộc)
+        - Quản lý phòng ban và chức vụ
+        - Theo dõi lịch sử công tác
+        - Xác định vai trò lãnh đạo (Chủ tịch, Giám đốc) để phân quyền duyệt
     """,
 
     'author': "My Company",

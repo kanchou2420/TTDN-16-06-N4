@@ -6,7 +6,9 @@
             <field name="name">khau_hao.tree</field>
             <field name="model">khau_hao_tai_san</field>
             <field name="arch" type="xml">
-                <tree string="Danh sách khấu hao" edit="false">
+                <tree string="Danh sách khấu hao" edit="false"
+                      decoration-success="trang_thai=='posted'"
+                      decoration-muted="trang_thai=='cancelled'">
                     <field name="ma_khau_hao"/>
                     <field name="tai_san_id"/>
                     <field name="ngay_khau_hao"/>
@@ -26,9 +28,9 @@
                 <form string="Chi tiết khấu hao">
                     <header>
                         <button name="action_post_journal" string="Ghi sổ" type="object" 
-                            class="btn btn-success" states="draft"/>
+                            class="btn btn-success" attrs="{'invisible': [('trang_thai', '!=', 'draft')]}"/>
                         <button name="action_cancel" string="Hủy" type="object" 
-                            class="btn btn-danger" states="draft"/>
+                            class="btn btn-danger" attrs="{'invisible': [('trang_thai', '!=', 'draft')]}"/>
                         <field name="trang_thai" widget="statusbar"/>
                     </header>
                     <sheet>
@@ -49,8 +51,8 @@
                             </group>
                         </group>
 
-                        <group string="Thông tin sổ cái">
-                            <field name="journal_entry_id" readonly="1"/>
+                        <group string="Bút toán khấu hao">
+                            <field name="but_toan_id" readonly="1"/>
                         </group>
 
                         <group string="Ghi chú">
@@ -61,7 +63,30 @@
                             <field name="gia_tri_sau_khau_hao" readonly="1"/>
                         </group>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
                 </form>
+            </field>
+        </record>
+
+        <!-- Khấu Hao Search View -->
+        <record id="view_khau_hao_search" model="ir.ui.view">
+            <field name="name">khau_hao.search</field>
+            <field name="model">khau_hao_tai_san</field>
+            <field name="arch" type="xml">
+                <search string="Tìm Khấu Hao">
+                    <field name="ma_khau_hao"/>
+                    <field name="tai_san_id"/>
+                    <filter name="filter_posted" string="Đã ghi sổ" domain="[('trang_thai', '=', 'posted')]"/>
+                    <filter name="filter_draft" string="Nháp" domain="[('trang_thai', '=', 'draft')]"/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter name="group_tai_san" string="Tài sản" context="{'group_by': 'tai_san_id'}"/>
+                        <filter name="group_thang" string="Tháng" context="{'group_by': 'ngay_khau_hao:month'}"/>
+                    </group>
+                </search>
             </field>
         </record>
 
@@ -70,8 +95,9 @@
             <field name="name">Khấu Hao Tài Sản</field>
             <field name="res_model">khau_hao_tai_san</field>
             <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_khau_hao_search"/>
             <field name="context">{'default_ngay_khau_hao': context_today()}</field>
-            <field name="help">Quản lý khấu hao tài sản và ghi nhận vào sổ cái</field>
+            <field name="help">Quản lý khấu hao tài sản - Module độc lập không cần account</field>
         </record>
     </data>
 </odoo>

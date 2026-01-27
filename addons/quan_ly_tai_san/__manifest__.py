@@ -21,7 +21,7 @@
     'license': 'LGPL-3',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'web'],
+    'depends': ['base', 'web', 'nhan_su'],
 
     # always loaded
     'data': [
